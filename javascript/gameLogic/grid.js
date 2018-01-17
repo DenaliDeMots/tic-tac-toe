@@ -14,6 +14,7 @@ function makeGrid (xSize, ySize) {
         //places a value grid.  Returns a string indicating success or failure
         setValueAt (mark, xCoordinate, yCoordinate) {
             if(xCoordinate <= xSize && yCoordinate <= ySize) {
+                if (grid[yCoordinate][xCoordinate]) return 'coordinates already used'
                 grid[yCoordinate][xCoordinate] = mark;
                 return 'value added'
             } else {
