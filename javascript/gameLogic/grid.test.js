@@ -28,6 +28,38 @@ test('grid does not allow overwriting values', () => {
     expect(value).toBe('X');
 })
 
+test('grid finds rows of matching values', () => {
+    let grid = makeGrid(3, 3);
+    grid.setValueAt('X', 0, 0);
+    grid.setValueAt('X', 1, 0);
+    let matches = grid.getHorizontalMatchingValues();
+    //partialially complete rows dont return a match
+    expect(matches).toEqual([])
+    grid.setValueAt('X', 2, 0);
+    matches = grid.getHorizontalMatchingValues();
+    let expectedMatchValue1 = {
+        matchType: 'horizontal match',
+        value: 'X',
+        rowIndex: 0
+    };
+    //complete rows return only the expected match object
+    expect(matches.length).toBe(1);
+    expect(matches[0]).toEqual(expectedMatchValue1);
+    grid.setValueAt('Y', 0, 1);
+    grid.setValueAt('Y', 1, 1);
+    grid.setValueAt('Y', 2, 1);
+    matches = grid.getHorizontalMatchingValues();
+    let expectedMatchValue2 = {
+        matchType: 'horizontal match',
+        value: 'Y',
+        rowIndex: 1
+    };
+    //multiple complete rows each return the expected match object
+    expect(matches.length).toBe(2);
+    expect(matches[0]).toEqual(expectedMatchValue1);
+    expect(matches[1]).toEqual(expectedMatchValue2);
+})
+
 test('gridStateAs2dArray() returns a 2d array with the set values', () => {
     let grid = makeGrid(3, 3);
     let value = {key: "value"};

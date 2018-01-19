@@ -35,6 +35,33 @@ function makeGrid (xSize, ySize) {
             return grid[yCoordinate][xCoordinate];
         },
 
+        getHorizontalMatchingValues() {
+            let matches = [];
+            for (let i = 0; i < grid.length; i++){
+                if(everyValueInRowIsTruthyAndTheSame(grid[i])) {
+                    matches.push(newMatchObject(grid[i][0], i));
+                }
+            }
+            return matches;
+
+            //helper functions
+            function everyValueInRowIsTruthyAndTheSame(row) {
+                let firstElement = row[0];
+                return (firstElement
+                    &&
+                    row.every((value) => value === firstElement)
+                )
+            }
+
+            function newMatchObject(value, rowIndex) {
+                return {
+                    matchType: 'horizontal match',
+                    value,
+                    rowIndex
+                }
+            }
+        },
+        
         gridStateAs2dArray () {
             //make a copy of the grid state
             let arrays = []
