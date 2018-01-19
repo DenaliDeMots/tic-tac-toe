@@ -60,6 +60,38 @@ test('grid finds rows of matching values', () => {
     expect(matches[1]).toEqual(expectedMatchValue2);
 })
 
+test('grid finds columns of matching values', () => {
+    let grid = makeGrid(3, 3);
+    grid.setValueAt('X', 0, 0);
+    grid.setValueAt('X', 0, 1);
+    let matches = grid.getVerticalMatchingValues()
+    //partially complete columns dont return matches
+    expect(matches).toEqual([]);
+    grid.setValueAt('X', 0, 2);
+    matches = grid.getVerticalMatchingValues();
+    let expectedMatchValue1 = {
+        matchType: 'vertical match',
+        value: 'X',
+        columnIndex: 0
+    };
+    //complete colunms return only the expected match object
+    expect(matches.length).toBe(1);
+    expect(matches[0]).toEqual(expectedMatchValue1);
+    grid.setValueAt('Y', 1, 0);
+    grid.setValueAt('Y', 1, 1);
+    grid.setValueAt('Y', 1, 2);
+    matches = grid.getVerticalMatchingValues();
+    let expectedMatchValue2 = {
+        matchType: 'vertical match',
+        value: 'Y',
+        columnIndex: 1
+    }
+    //multiple columns return the expected match objects
+    expect(matches.length).toBe(2);
+    expect(matches[0]).toEqual(expectedMatchValue1);
+    expect(matches[1]).toEqual(expectedMatchValue2);
+})
+
 test('gridStateAs2dArray() returns a 2d array with the set values', () => {
     let grid = makeGrid(3, 3);
     let value = {key: "value"};

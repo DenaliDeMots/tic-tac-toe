@@ -61,6 +61,30 @@ function makeGrid (xSize, ySize) {
                 }
             }
         },
+
+        getVerticalMatchingValues () {
+            matches = [];
+            for(let i = 0; i < grid[0].length; i++) {
+                let startElement = grid[0][i];
+                let match = !!startElement; //falsey values don't count as matches
+                for(let j = 0; j < grid[0].length; j++) {
+                    if(grid[j][i] !== startElement) match = false;
+                }
+                if(match) {
+                    matches.push(newMatchObject(grid[0][i], i))
+                }
+            }
+            return matches;
+
+            //helper functions
+            function newMatchObject(value, columnIndex) {
+                return {
+                    matchType: 'vertical match',
+                    value,
+                    columnIndex
+                }
+            }
+        },
         
         gridStateAs2dArray () {
             //make a copy of the grid state
