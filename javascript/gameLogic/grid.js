@@ -5,9 +5,17 @@ function makeGrid (xSize, ySize) {
 
     //represent the board as a 3x3 2d array initialized with undefined elements
     //the outter array index is the y coordinate, the inner array index is the x coordinate
+    //the grid origin is the top left corner
+    if (xSize < 1) xSize = 1;
+    if (ySize < 1) ySize = 1;
+
     let grid = [];
     for (let i = 0; i < ySize; i++) {
-        grid.push(new Array(xSize))
+        let row = []
+        for (let j = 0; j < xSize; j++) {
+            row.push(undefined)
+        }
+        grid.push(row)
     }
 
     let publicMethods = {
