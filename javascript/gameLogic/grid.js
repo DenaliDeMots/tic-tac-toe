@@ -85,7 +85,74 @@ function makeGrid (xSize, ySize) {
                 }
             }
         },
-        
+
+        getDiagonalMatchingValues () {
+            //only matches diagonals starting in a corner
+            let matches = []
+            matchDiagonalsFromLeft()
+            //only check 'from right' diagonals if the grid is not a square
+            if(xSize !== ySize) matchDiagonalsFromRight()
+            return matches;
+
+            //helper functions
+            function matchDiagonalsFromLeft () {
+                pushIfMatch(matchFromTopLeft());
+                pushIfMatch(matchFromBottomLeft());
+            }
+
+            function matchDiagonalsFromRight () {
+                pushIfMatch(matchFromTopRight());
+                pushIfMatch(matchFromBottomRight());
+            }
+
+            function pushIfMatch(matchResult){
+                if(matchResult) matches.push(matchResult)
+            }
+
+            function newMatchObject(value, startCorner) {
+                return {
+                    matchType: 'diagonal match',
+                    value,
+                    startCorner
+                }
+            }
+
+            //matching functions
+            function matchFromTopLeft () {
+                let topLeftElement = grid[0][0];
+                let smallerSideSize = xSize < ySize ? xSize : ySize;
+                if(checkForMatches()) return newMatchObject(topLeftElement, 'top left');
+
+                function checkForMatches () {
+                    for(let i = 0; i < smallerSideSize; i++) {
+                     if(grid[i][i] !== topLeftElement) return false
+                    }
+                    return true;
+                }
+            }
+
+            function matchFromBottomLeft () {
+                let bottomLeftElement = grid[grid.length - 1][0]
+                let smallerSideSize = xSize < ySize ? xSize : ySize;
+                if(checkForMatches()) return newMatchObject(bottomLeftElement, 'bottom left')
+                
+                function checkForMatches() {
+                    for(let i = 0; i < smallerSideSize; i++){
+                        if(grid[grid.length - (i+1)][i] !== bottomLeftElement) return false;
+                    }
+                    return true;
+                }
+            }
+
+            function matchFromTopRight () {
+             //Implement if a non-square grid is required   
+            }
+
+            function matchFromBottomRight () {
+            //Implement if a non-square grid is required
+            }
+        },
+
         gridStateAs2dArray () {
             //make a copy of the grid state
             let arrays = []

@@ -92,6 +92,45 @@ test('grid finds columns of matching values', () => {
     expect(matches[1]).toEqual(expectedMatchValue2);
 })
 
+test('grid finds diagonals of matching values', () => {
+    let grid = makeGrid(3, 3);
+    //check matching from the top left
+    grid.setValueAt('X', 0, 0)
+    grid.setValueAt('X', 1, 1)
+    let matches = grid.getDiagonalMatchingValues();
+    //incomplete diagonals don't return a match
+    expect(matches).toEqual([]);
+    grid.setValueAt('X', 2, 2);
+    matches = grid.getDiagonalMatchingValues();
+    let expectedMatchValue1 = {
+        matchType: 'diagonal match',
+        value: 'X',
+        startCorner: 'top left'
+    }
+    //complete diagonals return only their corrosponding match object
+    expect(matches.length).toBe(1);
+    expect(matches[0]).toEqual(expectedMatchValue1)
+    grid.setValueAt('X', 2, 0)
+    expect(matches.length).toBe(1);
+    expect(matches[0]).toEqual(expectedMatchValue1)
+    grid.setValueAt('X', 0, 2)
+    let expectedMatchValue2 = {
+        matchType: 'diagonal match',
+        value: 'X',
+        startCorner: 'bottom left'
+    }
+    matches = grid.getDiagonalMatchingValues()
+    //multiple diagonals
+    expect(matches.length).toBe(2);
+    let topLeftMatch = matches.find((match) => match.startCorner === 'top left');
+    expect(topLeftMatch).toEqual(expectedMatchValue1);
+    let bottomLeftMatch = matches.find((match) => match.startCorner === 'bottom left');
+    expect(bottomLeftMatch).toEqual(expectedMatchValue2)
+
+    //If a non square grid is required, add tests here to verify
+    //matching from the right side corners
+})
+
 test('gridStateAs2dArray() returns a 2d array with the set values', () => {
     let grid = makeGrid(3, 3);
     let value = {key: "value"};
