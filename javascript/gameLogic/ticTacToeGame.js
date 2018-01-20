@@ -20,6 +20,7 @@ function newTicTacToeGame(player1Token, player2Token) {
 
     function checkForWin () {
         let matchResults = checkForMatchingRowsColunmsOrDiagonals();
+        if(gameBoard.isGridFull() && matchResults.length === 0) return 'stalemate'
         return matchResults.length > 0 ? matchResults : false;
 
         function checkForMatchingRowsColunmsOrDiagonals() {

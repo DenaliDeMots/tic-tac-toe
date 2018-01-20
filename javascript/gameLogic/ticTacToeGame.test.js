@@ -27,7 +27,7 @@ test('new game starts properly', () => {
     expect(message).toBe('coordinates out of bounds')
 })
 
-test('game ends when a player wins', () => {
+test('game ends when a player wins or when there are no moves left to play', () => {
     let game = ticTacToe.newTicTacToeGame(player1, player2);
     game.placeToken(0, 0);
     game.placeToken(2, 0);
@@ -48,5 +48,23 @@ test('game ends when a player wins', () => {
     let nextGameState = game.getCurrentGameState()
     //additional moves do not get placed
     expect(gameState).toEqual(nextGameState);
-
+    //stalemate games return stalemate message
+    game = ticTacToe.newTicTacToeGame('X', 'Y');
+    game.placeToken(0, 0);    
+    game.placeToken(2, 0);
+    game.placeToken(1, 1);
+    game.placeToken(2, 2);
+    game.placeToken(2, 1);
+    game.placeToken(0, 1);
+    game.placeToken(1, 2);
+    game.placeToken(1, 0);
+    message = game.placeToken(0, 2);
+    let expectedGameState = [
+        ['X','Y','Y'],
+        ['Y','X','X'],
+        ['X','X','Y']
+    ]
+    gameState = game.getCurrentGameState();
+    expect(gameState).toEqual(expectedGameState);
+    expect(message).toBe('stalemate')
 })
