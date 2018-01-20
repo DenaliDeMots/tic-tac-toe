@@ -14,7 +14,7 @@ test('grid does not set out of bound values', () => {
     let grid = makeGrid(3, 3);
     let value = 'X'
     let message = grid.setValueAt(value, 5, 0);
-    expect(message).toBe('out of bounds');
+    expect(message).toBe('coordinates out of bounds');
     let retrieved = grid.valueAt(5, 0);
     expect(retrieved).toBe(undefined);
 })

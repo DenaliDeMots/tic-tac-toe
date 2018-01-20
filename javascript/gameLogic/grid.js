@@ -26,7 +26,7 @@ function makeGrid (xSize, ySize) {
                 grid[yCoordinate][xCoordinate] = mark;
                 return 'value added'
             } else {
-                return 'out of bounds'
+                return 'coordinates out of bounds'
             }
             
         },
