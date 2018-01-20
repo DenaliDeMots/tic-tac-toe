@@ -9,7 +9,18 @@ function newTicTacToeGame(player1Token, player2Token) {
 
     let turn = 'player1';
     let winner = false;
+    
+    function changeTurn () {
+        turn = turn === 'player1' ? 'player2' : 'player1'
+    }
 
+    function currentToken() {
+        return turn === 'player1' ? player1Token : player2Token
+    }
+
+    function checkForWin () {
+        //TODO
+    }
     
     let publicMethods = {
         getCurrentGameState(){
@@ -21,6 +32,28 @@ function newTicTacToeGame(player1Token, player2Token) {
             return turn;
         },
         
+        placeToken(xCoordinate, yCoordinate) {
+            if (winner) return winner + ' wins';
+            let didPlaceToken = gameBoard.setValueAt(currentToken(), xCoordinate, yCoordinate);
+            return generateGameMessage()
+
+            function generateGameMessage() {
+                if (didPlaceToken === 'value added') {
+                    return placeTokenResult()
+                } else {
+                    return didPlaceToken;
+                }
+            }
+            
+            
+            //helper functions
+            function placeTokenResult () {
+                checkForWin();
+                if(winner) return winner + ' wins';
+                changeTurn();
+                return turn === 'player1' ? 'player2 placed token' : 'player1 placed token'
+            }
+        }
     }
 
     return publicMethods;
