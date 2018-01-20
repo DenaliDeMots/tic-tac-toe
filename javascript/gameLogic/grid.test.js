@@ -96,9 +96,11 @@ test('grid finds diagonals of matching values', () => {
     let grid = makeGrid(3, 3);
     //check matching from the top left
     grid.setValueAt('X', 0, 0)
+    let matches = grid.getDiagonalMatchingValues()
+    expect(matches).toEqual([])
     grid.setValueAt('X', 1, 1)
-    let matches = grid.getDiagonalMatchingValues();
-    //incomplete diagonals don't return a match
+    matches = grid.getDiagonalMatchingValues();
+    //incomplete diagonals don't return a match (test top left)
     expect(matches).toEqual([]);
     grid.setValueAt('X', 2, 2);
     matches = grid.getDiagonalMatchingValues();
@@ -126,6 +128,19 @@ test('grid finds diagonals of matching values', () => {
     expect(topLeftMatch).toEqual(expectedMatchValue1);
     let bottomLeftMatch = matches.find((match) => match.startCorner === 'bottom left');
     expect(bottomLeftMatch).toEqual(expectedMatchValue2)
+
+    //incompete diagonals don't return a match (test bottom left)
+    grid = makeGrid(3, 3);
+    grid.setValueAt('X', 0, 2)
+    grid.setValueAt('X', 1, 1)
+    matches = grid.getDiagonalMatchingValues()
+    expect(matches.length).toBe(0)
+    //complete diagonals only return their corrosponding match
+    grid.setValueAt('X', 2, 0)
+    matches = grid.getDiagonalMatchingValues()
+    expect(matches.length).toBe(1)
+    expect(matches[0]).toEqual(expectedMatchValue2)
+
 
     //If a non square grid is required, add tests here to verify
     //matching from the right side corners

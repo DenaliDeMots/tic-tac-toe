@@ -120,6 +120,7 @@ function makeGrid (xSize, ySize) {
             //matching functions
             function matchFromTopLeft () {
                 let topLeftElement = grid[0][0];
+                if(!topLeftElement) return false
                 let smallerSideSize = xSize < ySize ? xSize : ySize;
                 if(checkForMatches()) return newMatchObject(topLeftElement, 'top left');
 
@@ -133,6 +134,7 @@ function makeGrid (xSize, ySize) {
 
             function matchFromBottomLeft () {
                 let bottomLeftElement = grid[grid.length - 1][0]
+                if(!bottomLeftElement) return false
                 let smallerSideSize = xSize < ySize ? xSize : ySize;
                 if(checkForMatches()) return newMatchObject(bottomLeftElement, 'bottom left')
                 
