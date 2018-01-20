@@ -8,7 +8,7 @@ function newTicTacToeGame(player1Token, player2Token) {
     const gameBoard = grid.makeGrid(3, 3);
 
     let turn = 'player1';
-    let winner = false;
+    let winnerMessage = false;
     
     function changeTurn () {
         turn = turn === 'player1' ? 'player2' : 'player1'
@@ -19,7 +19,15 @@ function newTicTacToeGame(player1Token, player2Token) {
     }
 
     function checkForWin () {
-        //TODO
+        let matchResults = checkForMatchingRowsColunmsOrDiagonals();
+        return matchResults.length > 0 ? matchResults : false;
+
+        function checkForMatchingRowsColunmsOrDiagonals() {
+            let horizontalMatches = gameBoard.getHorizontalMatchingValues();
+            let verticalMatches = gameBoard.getVerticalMatchingValues();
+            let diagonalMatches = gameBoard.getDiagonalMatchingValues();
+            return horizontalMatches.concat(verticalMatches, diagonalMatches)
+        }
     }
     
     let publicMethods = {
@@ -33,7 +41,7 @@ function newTicTacToeGame(player1Token, player2Token) {
         },
         
         placeToken(xCoordinate, yCoordinate) {
-            if (winner) return winner + ' wins';
+            if (winnerMessage) return winnerMessage;
             let didPlaceToken = gameBoard.setValueAt(currentToken(), xCoordinate, yCoordinate);
             return generateGameMessage()
 
@@ -45,11 +53,10 @@ function newTicTacToeGame(player1Token, player2Token) {
                 }
             }
             
-            
             //helper functions
             function placeTokenResult () {
-                checkForWin();
-                if(winner) return winner + ' wins';
+                winnerMessage = checkForWin();
+                if(winnerMessage) return winnerMessage;
                 changeTurn();
                 return turn === 'player1' ? 'player2 placed token' : 'player1 placed token'
             }
