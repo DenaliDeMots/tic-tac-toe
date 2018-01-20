@@ -146,6 +146,31 @@ test('grid finds diagonals of matching values', () => {
     //matching from the right side corners
 })
 
+test('isGridFull() detects when the entire grid has truthy values', () => {
+    let grid = makeGrid(3, 3)
+    //expect false when totally empty
+    expect(grid.isGridFull()).toBe(false);
+    //expect false after 1 element is added
+    grid.setValueAt('X', 0, 0);
+    expect(grid.isGridFull()).toBe(false);
+    //expect false after a horizintal row is added
+    grid.setValueAt('X', 1, 0);
+    grid.setValueAt('X', 2, 0);
+    expect(grid.isGridFull()).toBe(false);
+    //expect false after a vertical column is added
+    grid.setValueAt('X', 0, 1);
+    grid.setValueAt('X', 0, 2);
+    expect(grid.isGridFull()).toBe(false);
+    //expect false after a diagonal is added
+    grid.setValueAt('X', 1, 1);
+    grid.setValueAt('X', 2, 2);
+    expect(grid.isGridFull()).toBe(false);
+    //expect true only when the grid is full
+    grid.setValueAt('X', 1, 2);
+    grid.setValueAt('X', 2, 1);
+    expect(grid.isGridFull()).toBe(true);
+})
+
 test('gridStateAs2dArray() returns a 2d array with the set values', () => {
     let grid = makeGrid(3, 3);
     let value = {key: "value"};
