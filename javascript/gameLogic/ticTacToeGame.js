@@ -1,20 +1,27 @@
 const grid = require('./grid');
 const deepFreeze = require('deep-freeze');
 
+//messages recieved from grid object
 const valueAdded = grid.messages.setValueAt.valueAdded;
 const outOfBounds = grid.messages.setValueAt.coordinatesOutOfBounds;
 const alreadyUsed = grid.messages.setValueAt.coordinatesAlreadyUsed;
 const matchMessages = grid.messages.matchMessages;
 
+//messages emitted by tic tac toe game object
+const player1 = 'player1';
+const player2 = 'player2';
+const player1PlacedToken = 'player1 placed token';
+const player2PlacedToken = 'player2 placed token';
+const stalemate = 'stalemate';
 
 const messages = {
     players: {
-        player1: 'player1',
-        player2: 'player2'
+        player1,
+        player2
     },
     placeToken: {
-        player1PlacedToken: 'player1 placed token',
-        player2PlacedToken: 'player2 placed token'
+        player1PlacedToken,
+        player2PlacedToken
     },
     placeTokenError: {
         outOfBounds,
@@ -22,17 +29,16 @@ const messages = {
     },
     winMessages: {
         matchMessages,
-        stalemate: 'stalemate'
+        stalemate
     }
 
 }
 deepFreeze(messages)
 
-const player1 = messages.players.player1;
-const player2 = messages.players.player2;
-const player1PlacedToken = messages.placeToken.player1PlacedToken;
-const player2PlacedToken = messages.placeToken.player2PlacedToken;
-const stalemate = messages.winMessages.stalemate;
+
+
+
+
 
 
 //object representing the rules of a Tic Tac Toe game
