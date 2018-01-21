@@ -1,11 +1,30 @@
 let gameBoard = require('./grid');
+
 let makeGrid = gameBoard.makeGrid;
+
+const setValueMessages = gameBoard.messages.setValueAt;
+const matchMessages = gameBoard.messages.matchMessages
+
+const outOfBounds = setValueMessages.coordinatesOutOfBoundsl
+const valueAdded = setValueMessages.valueAdded;
+const alreadyUsed = setValueMessages.alreadyUsed;
+
+const horizintalMatch = matchMessages.horizontalMatch.matchType;
+const verticalMatch = matchMessages.verticalMatch.matchType;
+const diagonalMatch = matchMessages.diagonalMatch.matchType;
+
+const rowIndex = matchMessages.horizontalMatch.locationIdentifierKey;
+const columnIndex = matchMessages.horizontalMatch.locationIdentifierKey;
+const startCorner = matchMessages.diagonalMatch.locationIdentifierKey;
+
+const topLeft = matchMessages.diagonalMatch.locations.topLeft;
+const bottomLeft = matchMessages.diagonalMatch.locations.bottomLeft;
 
 test('grid sets and retrieves values', () => {
     let grid = makeGrid(3, 3);
     let value = 'X'
     let message = grid.setValueAt(value, 0, 0);
-    expect(message).toBe('value added');
+    expect(message).toBe(valueAdded);
     let retrieved = grid.valueAt(0, 0);
     expect(retrieved).toBe(value)
 })
@@ -14,7 +33,7 @@ test('grid does not set out of bound values', () => {
     let grid = makeGrid(3, 3);
     let value = 'X'
     let message = grid.setValueAt(value, 5, 0);
-    expect(message).toBe('coordinates out of bounds');
+    expect(message).toBe(outOfBounds);
     let retrieved = grid.valueAt(5, 0);
     expect(retrieved).toBe(undefined);
 })
@@ -23,7 +42,7 @@ test('grid does not allow overwriting values', () => {
     let grid = makeGrid(3, 3);
     grid.setValueAt('X', 0, 0);
     let message = grid.setValueAt('Y', 0, 0);
-    expect(message).toBe('coordinates already used')
+    expect(message).toBe(alreadyUsed)
     let value = grid.valueAt(0, 0);
     expect(value).toBe('X');
 })
@@ -38,9 +57,9 @@ test('grid finds rows of matching values', () => {
     grid.setValueAt('X', 2, 0);
     matches = grid.getHorizontalMatchingValues();
     let expectedMatchValue1 = {
-        matchType: 'horizontal match',
+        matchType: horizintalMatch,
         value: 'X',
-        rowIndex: 0
+        [rowIndex]: 0
     };
     //complete rows return only the expected match object
     expect(matches.length).toBe(1);
@@ -50,9 +69,9 @@ test('grid finds rows of matching values', () => {
     grid.setValueAt('Y', 2, 1);
     matches = grid.getHorizontalMatchingValues();
     let expectedMatchValue2 = {
-        matchType: 'horizontal match',
+        matchType: horizintalMatch,
         value: 'Y',
-        rowIndex: 1
+        [rowIndex]: 1
     };
     //multiple complete rows each return the expected match object
     expect(matches.length).toBe(2);
@@ -70,9 +89,9 @@ test('grid finds columns of matching values', () => {
     grid.setValueAt('X', 0, 2);
     matches = grid.getVerticalMatchingValues();
     let expectedMatchValue1 = {
-        matchType: 'vertical match',
+        matchType: verticalMatch,
         value: 'X',
-        columnIndex: 0
+        [columnIndex]: 0
     };
     //complete colunms return only the expected match object
     expect(matches.length).toBe(1);
@@ -82,9 +101,9 @@ test('grid finds columns of matching values', () => {
     grid.setValueAt('Y', 1, 2);
     matches = grid.getVerticalMatchingValues();
     let expectedMatchValue2 = {
-        matchType: 'vertical match',
+        matchType: verticalMatch,
         value: 'Y',
-        columnIndex: 1
+        [columnIndex]: 1
     }
     //multiple columns return the expected match objects
     expect(matches.length).toBe(2);
@@ -105,9 +124,9 @@ test('grid finds diagonals of matching values', () => {
     grid.setValueAt('X', 2, 2);
     matches = grid.getDiagonalMatchingValues();
     let expectedMatchValue1 = {
-        matchType: 'diagonal match',
+        matchType: diagonalMatch,
         value: 'X',
-        startCorner: 'top left'
+        [startCorner]: topLeft
     }
     //complete diagonals return only their corrosponding match object
     expect(matches.length).toBe(1);
@@ -117,16 +136,16 @@ test('grid finds diagonals of matching values', () => {
     expect(matches[0]).toEqual(expectedMatchValue1)
     grid.setValueAt('X', 0, 2)
     let expectedMatchValue2 = {
-        matchType: 'diagonal match',
+        matchType: diagonalMatch,
         value: 'X',
-        startCorner: 'bottom left'
+        [startCorner]: bottomLeft
     }
     matches = grid.getDiagonalMatchingValues()
     //multiple diagonals
     expect(matches.length).toBe(2);
-    let topLeftMatch = matches.find((match) => match.startCorner === 'top left');
+    let topLeftMatch = matches.find((match) => match[startCorner] === topLeft);
     expect(topLeftMatch).toEqual(expectedMatchValue1);
-    let bottomLeftMatch = matches.find((match) => match.startCorner === 'bottom left');
+    let bottomLeftMatch = matches.find((match) => match[startCorner] === bottomLeft);
     expect(bottomLeftMatch).toEqual(expectedMatchValue2)
 
     //incompete diagonals don't return a match (test bottom left)

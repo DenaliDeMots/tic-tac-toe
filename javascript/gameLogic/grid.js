@@ -1,3 +1,48 @@
+deepFreeze = require('deep-freeze');
+
+//messages emmited by grid objects
+const gridMessages = {
+    setValueAt: {
+        coordinatesAlreadyUsed: 'coordinates already used',
+        valueAdded: 'value added',
+        coordinatesOutOfBounds: 'coordinates out of bounds'
+    },
+    matchMessages: {
+        horizontalMatch: {
+            matchType: 'horizontal match',
+            locationIdentifierKey: 'rowIndex'
+        },
+        verticalMatch: {
+            matchType: 'vertical match',
+            locationIdentifierKey: 'columnIndex'
+        },
+        diagonalMatch: {
+            matchType: 'diagonal match',
+            locationIdentifierKey: 'startCorner',
+            locations: {
+                topLeft: 'top left',
+                bottomLeft: 'bottom left',
+                topRight: 'top right',
+                bottomRight: 'bottom right'
+            }
+        }
+    }
+}
+
+deepFreeze(gridMessages)
+
+const coordinatesUsedMessage = gridMessages.setValueAt.coordinatesAlreadyUsed;
+const valueAddedMessage = gridMessages.setValueAt.valueAdded;
+const outOfBoundsMessage = gridMessages.setValueAt.coordinatesOutOfBounds;
+
+const horizontalMatchType = gridMessages.matchMessages.horizontalMatch.matchType;
+const horizontalMatchIdKey = gridMessages.matchMessages.horizontalMatch.locationIdentifierKey;
+const verticalMatchType = gridMessages.matchMessages.verticalMatch.matchType;
+const verticalMatchIdKey = gridMessages.matchMessages.verticalMatch.locationIdentifierKey;
+const diagonalMatchType = gridMessages.matchMessages.diagonalMatch.matchType;
+const diagonalMatchIdKey = gridMessages.matchMessages.diagonalMatch.locationIdentifierKey;
+const diagonalMatchLocations = gridMessages.matchMessages.diagonalMatch.locations;
+
 
 function makeGrid (xSize, ySize) {
     
@@ -22,11 +67,11 @@ function makeGrid (xSize, ySize) {
         //places a value grid.  Returns a string indicating success or failure
         setValueAt (mark, xCoordinate, yCoordinate) {
             if(xCoordinate <= xSize && yCoordinate <= ySize) {
-                if (grid[yCoordinate][xCoordinate]) return 'coordinates already used'
+                if (grid[yCoordinate][xCoordinate]) return coordinatesUsedMessage
                 grid[yCoordinate][xCoordinate] = mark;
-                return 'value added'
+                return valueAddedMessage
             } else {
-                return 'coordinates out of bounds'
+                return outOfBoundsMessage
             }
             
         },
@@ -55,9 +100,9 @@ function makeGrid (xSize, ySize) {
 
             function newMatchObject(value, rowIndex) {
                 return {
-                    matchType: 'horizontal match',
+                    matchType: horizontalMatchType,
                     value,
-                    rowIndex
+                    [horizontalMatchIdKey]: rowIndex
                 }
             }
         },
@@ -79,9 +124,9 @@ function makeGrid (xSize, ySize) {
             //helper functions
             function newMatchObject(value, columnIndex) {
                 return {
-                    matchType: 'vertical match',
+                    matchType: verticalMatchType,
                     value,
-                    columnIndex
+                    [verticalMatchIdKey]:columnIndex
                 }
             }
         },
@@ -111,9 +156,9 @@ function makeGrid (xSize, ySize) {
 
             function newMatchObject(value, startCorner) {
                 return {
-                    matchType: 'diagonal match',
+                    matchType: diagonalMatchType,
                     value,
-                    startCorner
+                    [diagonalMatchIdKey]: startCorner
                 }
             }
 
@@ -122,7 +167,7 @@ function makeGrid (xSize, ySize) {
                 let topLeftElement = grid[0][0];
                 if(!topLeftElement) return false
                 let smallerSideSize = xSize < ySize ? xSize : ySize;
-                if(checkForMatches()) return newMatchObject(topLeftElement, 'top left');
+                if(checkForMatches()) return newMatchObject(topLeftElement, diagonalMatchLocations.topLeft);
 
                 function checkForMatches () {
                     for(let i = 0; i < smallerSideSize; i++) {
@@ -136,7 +181,7 @@ function makeGrid (xSize, ySize) {
                 let bottomLeftElement = grid[grid.length - 1][0]
                 if(!bottomLeftElement) return false
                 let smallerSideSize = xSize < ySize ? xSize : ySize;
-                if(checkForMatches()) return newMatchObject(bottomLeftElement, 'bottom left')
+                if(checkForMatches()) return newMatchObject(bottomLeftElement, diagonalMatchLocations.bottomLeft)
                 
                 function checkForMatches() {
                     for(let i = 0; i < smallerSideSize; i++){
@@ -176,4 +221,5 @@ function makeGrid (xSize, ySize) {
     return publicMethods
 }
 
-exports.makeGrid = makeGrid
+exports.makeGrid = makeGrid;
+exports.messages = gridMessages;

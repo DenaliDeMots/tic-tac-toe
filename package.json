@@ -3,6 +3,9 @@
     "jest": "^22.1.1"
   },
   "scripts": {
-    "test" : "jest"
+    "test": "jest"
+  },
+  "dependencies": {
+    "deep-freeze": "^0.0.1"
   }
 }
