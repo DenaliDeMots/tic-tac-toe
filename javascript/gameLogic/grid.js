@@ -1,48 +1,45 @@
 deepFreeze = require('deep-freeze');
 
 //messages emmited by grid objects
+const coordinatesAlreadyUsed = 'coordinates already used';
+const valueAdded = 'value added';
+const coordinatesOutOfBounds = 'coordinates out of bounds';
+const horizontalMatchType = 'horizontal match';
+const horizontalMatchIdKey = 'rowIndex';
+const verticalMatchType = 'vertical match';
+const verticalMatchIdKey = 'columnIndex';
+const diagonalMatchType = 'diagonal match';
+const diagonalMatchIdKey = 'startCorner';
+const diagonalMatchLocations = {
+    topLeft: 'top left',
+    bottomLeft: 'bottom left',
+    topRight: 'top right',
+    bottomRight: 'bottom right'
+};
+
 const gridMessages = {
     setValueAt: {
-        coordinatesAlreadyUsed: 'coordinates already used',
-        valueAdded: 'value added',
-        coordinatesOutOfBounds: 'coordinates out of bounds'
+        coordinatesAlreadyUsed,
+        valueAdded,
+        coordinatesOutOfBounds
     },
     matchMessages: {
         horizontalMatch: {
-            matchType: 'horizontal match',
-            locationIdentifierKey: 'rowIndex'
+            matchType: horizontalMatchType,
+            locationIdentifierKey: horizontalMatchIdKey
         },
         verticalMatch: {
-            matchType: 'vertical match',
-            locationIdentifierKey: 'columnIndex'
+            matchType: verticalMatchType,
+            locationIdentifierKey: verticalMatchIdKey
         },
         diagonalMatch: {
-            matchType: 'diagonal match',
-            locationIdentifierKey: 'startCorner',
-            locations: {
-                topLeft: 'top left',
-                bottomLeft: 'bottom left',
-                topRight: 'top right',
-                bottomRight: 'bottom right'
-            }
+            matchType: diagonalMatchType,
+            locationIdentifierKey: diagonalMatchIdKey,
+            locations: diagonalMatchLocations
         }
     }
 }
-
 deepFreeze(gridMessages)
-
-const coordinatesUsedMessage = gridMessages.setValueAt.coordinatesAlreadyUsed;
-const valueAddedMessage = gridMessages.setValueAt.valueAdded;
-const outOfBoundsMessage = gridMessages.setValueAt.coordinatesOutOfBounds;
-
-const horizontalMatchType = gridMessages.matchMessages.horizontalMatch.matchType;
-const horizontalMatchIdKey = gridMessages.matchMessages.horizontalMatch.locationIdentifierKey;
-const verticalMatchType = gridMessages.matchMessages.verticalMatch.matchType;
-const verticalMatchIdKey = gridMessages.matchMessages.verticalMatch.locationIdentifierKey;
-const diagonalMatchType = gridMessages.matchMessages.diagonalMatch.matchType;
-const diagonalMatchIdKey = gridMessages.matchMessages.diagonalMatch.locationIdentifierKey;
-const diagonalMatchLocations = gridMessages.matchMessages.diagonalMatch.locations;
-
 
 function makeGrid (xSize, ySize) {
     
@@ -67,11 +64,11 @@ function makeGrid (xSize, ySize) {
         //places a value grid.  Returns a string indicating success or failure
         setValueAt (mark, xCoordinate, yCoordinate) {
             if(xCoordinate <= xSize && yCoordinate <= ySize) {
-                if (grid[yCoordinate][xCoordinate]) return coordinatesUsedMessage
+                if (grid[yCoordinate][xCoordinate]) return coordinatesAlreadyUsed
                 grid[yCoordinate][xCoordinate] = mark;
-                return valueAddedMessage
+                return valueAdded
             } else {
-                return outOfBoundsMessage
+                return coordinatesOutOfBounds
             }
             
         },
