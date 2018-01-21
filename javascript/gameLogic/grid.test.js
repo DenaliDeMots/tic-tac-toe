@@ -5,16 +5,16 @@ let makeGrid = gameBoard.makeGrid;
 const setValueMessages = gameBoard.messages.setValueAt;
 const matchMessages = gameBoard.messages.matchMessages
 
-const outOfBounds = setValueMessages.coordinatesOutOfBoundsl
+const outOfBounds = setValueMessages.coordinatesOutOfBounds;
 const valueAdded = setValueMessages.valueAdded;
-const alreadyUsed = setValueMessages.alreadyUsed;
+const alreadyUsed = setValueMessages.coordinatesAlreadyUsed;
 
 const horizintalMatch = matchMessages.horizontalMatch.matchType;
 const verticalMatch = matchMessages.verticalMatch.matchType;
 const diagonalMatch = matchMessages.diagonalMatch.matchType;
 
 const rowIndex = matchMessages.horizontalMatch.locationIdentifierKey;
-const columnIndex = matchMessages.horizontalMatch.locationIdentifierKey;
+const columnIndex = matchMessages.verticalMatch.locationIdentifierKey;
 const startCorner = matchMessages.diagonalMatch.locationIdentifierKey;
 
 const topLeft = matchMessages.diagonalMatch.locations.topLeft;
