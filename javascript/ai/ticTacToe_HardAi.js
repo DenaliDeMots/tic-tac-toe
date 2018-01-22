@@ -78,7 +78,27 @@ function impendingMatchLocation(gameState) {
         }
 
         function checkColumns () {
-            //TODO
+            let rotatedGrid = columnsAsRows(gameState);
+            let columns = rotatedGrid.map((column) => twoSameAndOneEmpty(column));
+            let columnMatchIndex = columns.indexOf(true);
+            if(columnMatchIndex === -1) return false;
+            setCoordinatesAndPlayer();
+            return true;
+
+            function columnsAsRows(grid) {
+                let rotGrid = []
+                for(let i = 0; i < grid[0].length; i++) {
+                    rotGrid.push(grid.map((row) => row[i]))
+                }
+                return rotGrid;
+            }
+
+            function setCoordinatesAndPlayer () {
+                let matchingColumn = rotatedGrid[columnMatchIndex]
+                let rowMatchIndex = matchingColumn.map((e) => !!e).indexOf(false);
+                unfilledCoordinates = {x: columnMatchIndex, y: rowMatchIndex}
+                playerAboutToWin = matchingColumn.filter((e) => !!e)[0]
+            }
         }
 
         function checkDiagonals () {
