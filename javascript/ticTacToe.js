@@ -11,20 +11,31 @@ const playerController = require('./controllers/playerController');
 
 function startTicTacToeGame (player1Token, player2Token) {
     let ticTacToeGame = gameType.newTicTacToeGame(player1Token, player2Token)
-    
-    //set game methods needed by session controller
-    ticTacToeGame.play = (move) =>{
-        return ticTacToeGame.placeToken(move.x, move.y)
-    }
-    ticTacToeGame.isValidMove = ticTacToeGame.isAValidMoveMessage;
+    normalizeGameMethods()
+    return createGame()
 
-    let game = sessionController.newSessionController(ticTacToeGame, 2);
-    let player1 = playerController.newPlayerController(game, player1Token);
-    let player2 = playerController.newPlayerController(game, player2Token);
-    game.startGame();
-    return {
-        player1,
-        player2,
+    function normalizeGameMethods() {
+        //set game methods needed by session controller
+        ticTacToeGame.play = (move) =>{
+            return ticTacToeGame.placeToken(move.x, move.y)
+        }
+        ticTacToeGame.isValidMove = ticTacToeGame.isAValidMoveMessage;
+    }
+
+    function createGame () {
+        let game = sessionController.newSessionController(ticTacToeGame, 2);
+        let playerControllers = createPlayerControllers();
+        game.startGame();
+        return playerControllers
+
+        function createPlayerControllers() {
+            let player1 = playerController.newPlayerController(game, player1Token);
+            let player2 = playerController.newPlayerController(game, player2Token);
+            return {
+                player1,
+                player2
+            }
+        }
     }
 }
 
