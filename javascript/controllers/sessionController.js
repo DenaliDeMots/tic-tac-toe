@@ -73,6 +73,10 @@ function newSessionController(game, numberOfPlayers) {
             if (game.isValidMove(result)) changeTurn();
             return result;
         },
+
+        getCurrentTurn() {
+            return currentPlayerTurn;
+        }
     }
     return publicMethods;
 }

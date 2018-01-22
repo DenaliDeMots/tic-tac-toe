@@ -90,3 +90,18 @@ test('place move updates game only on valid moves', () =>{
     placeMoveMsg = controller.placeMove(validMove, player1);
     expect(placeMoveMsg).toEqual(notYourTurn);
 })
+
+test('getCurrentTurn returns the correct turn', () => {
+  //create a controller for a 2 player game, add players, and start game
+  const controller = sessionController.newSessionController(gameMock, 2);
+  controller.addPlayer(player1);
+  controller.addPlayer(player2);
+  controller.startGame();
+  //game starts with player 1
+  let currentPlayer = controller.getCurrentTurn()
+  expect(currentPlayer).toEqual(player1);
+  //current player updates correctly when the turn changes
+  controller.placeMove(validMove, player1);
+  currentPlayer = controller.getCurrentTurn();
+  expect(currentPlayer).toEqual(player2);
+})
