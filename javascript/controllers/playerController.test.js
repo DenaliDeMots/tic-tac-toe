@@ -102,3 +102,17 @@ test('turn notifier registers a callback that gets fired on turn change', () => 
         player: billy
     });
 })
+
+test('player controllers can get the current game state', () => {
+    gameMock.resetGameState();
+    //create game session and player controllers
+    let gameSession = sessionController.newSessionController(gameMock, 2);
+    let billyController = playerController.newPlayerController(gameSession, billy);
+    let sallyController = playerController.newPlayerController(gameSession, sally);
+    gameSession.startGame();
+    let currentGameState = billyController.getCurrentGameState();
+    expect(currentGameState).toEqual(gameMock.getCurrentGameState());
+    billyController.playMove(validMove);
+    currentGameState = billyController.getCurrentGameState();
+    expect(currentGameState).toEqual(gameMock.getCurrentGameState());  
+})

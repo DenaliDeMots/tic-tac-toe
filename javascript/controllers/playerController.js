@@ -15,6 +15,10 @@ function newPlayerController(gameSession, playerId) {
 
         turnNotifier(callback) {
             gameSession.onTurnChange(callback)
+        },
+
+        getCurrentGameState(){
+            return gameSession.getCurrentGameState();
         }
     }
     //only return a player controller object if the player was successfully added to the session
