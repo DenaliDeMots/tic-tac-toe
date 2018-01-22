@@ -69,6 +69,10 @@ function newSessionController(game, numberOfPlayers) {
             }
         },
 
+        hasPlayer(player) {
+            return players.includes(player)
+        },
+
         startGame(){
             if(gameHasStarted) return alreadyStarted;
             if(players.length === numberOfPlayers){

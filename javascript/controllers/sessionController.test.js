@@ -46,6 +46,10 @@ test('adds new players', () => {
     //attempting to add a third player gives a 'can't add player' message
     addPlayerMsg = controller.addPlayer('Jim-Bob');
     expect(addPlayerMsg).toEqual(cantAddPlayer);
+    //hasPlayer() only returns added players
+    expect(controller.hasPlayer(player1)).toBe(true);
+    expect(controller.hasPlayer(player2)).toBe(true);
+    expect(controller.hasPlayer('Jim-Bob')).toBe(false);
 })
 
 test('game starts only after enough players added', () => {
