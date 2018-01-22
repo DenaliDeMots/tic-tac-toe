@@ -38,12 +38,24 @@ function newSessionController(game, numberOfPlayers) {
     let players = [];
     let gameHasStarted = false;
     let currentPlayerTurn
+    let changeTurnCallbacks = []
 
     function changeTurn() {
         let playerIndex = players.indexOf(currentPlayerTurn);
         playerIndex = playerIndex === players.length - 1 ?
             0 : playerIndex + 1;
         currentPlayerTurn = players[playerIndex]
+        dispatchTurnChangeEvent()
+
+        function dispatchTurnChangeEvent () {
+            changeTurnCallbacks.map((callback) => {
+                if (typeof callback !== 'function') return;
+                callback({
+                    currentTurn: 'player ' + (playerIndex + 1),
+                    player: players[playerIndex]
+                });
+            })
+        }
     }
 
     let publicMethods = {
@@ -80,7 +92,11 @@ function newSessionController(game, numberOfPlayers) {
 
         getCurrentGameState() {
             return game.getCurrentGameState();
-        }
+        },
+
+        onTurnChange(callback){
+            changeTurnCallbacks.push(callback)
+        },
     }
     return publicMethods;
 }

@@ -130,3 +130,42 @@ test('getCurrentGameState gets the game state from the game object', () => {
     currentGameState = controller.getCurrentGameState();
     expect(currentGameState).toBe(2);
 })
+
+test('register callback events for turn changes and have them fire on turn change', () => {
+    //create a controller for a 2 player game, add players, and start game
+    const controller = sessionController.newSessionController(gameMock, 2);
+    controller.addPlayer(player1);
+    controller.addPlayer(player2);
+    controller.startGame();
+    //set callback
+    let callbackResult1 = false;
+    controller.onTurnChange((turnChangeObject) => {
+        callbackResult1 = turnChangeObject;
+    })
+    //callback fires on turn change
+    controller.placeMove(validMove, player1);
+    expect(callbackResult1).toEqual({
+        currentTurn: 'player 2',
+        player: player2
+    })
+    controller.placeMove(validMove, player2)
+    expect(callbackResult1).toEqual({
+        currentTurn: 'player 1',
+        player: player1
+    })
+    //all registered callbacks fire on turn change
+    callbackResult1 = false;
+    let callbackResult2 = false;
+    controller.onTurnChange((turnChangeObject) => {
+        callbackResult2 = turnChangeObject;
+    })
+    controller.placeMove(validMove, player1);
+    expect(callbackResult1).toEqual({
+        currentTurn: 'player 2',
+        player: player2
+    })
+    expect(callbackResult2).toEqual({
+        currentTurn: 'player 2',
+        player: player2
+    })
+})
