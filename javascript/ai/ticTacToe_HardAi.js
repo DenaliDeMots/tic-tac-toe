@@ -103,9 +103,9 @@ function impendingMatchLocation(gameState, player) {
         return false;
 
         function twoSameAndOneEmpty (threeElementArry){
-            //filter out falsey values
-            let marks = threeElementArry.filter((mark) => mark === player)
-            return marks.length === 2;
+            //filter out falsey values and check that all remaining marks match player
+            let truthyMarks = threeElementArry.filter((mark) => !!mark);
+            return truthyMarks.length === 2 && truthyMarks.every((mark) => mark === player);
         }
 
         function checkRows () {

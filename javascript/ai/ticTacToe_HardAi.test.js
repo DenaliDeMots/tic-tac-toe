@@ -95,6 +95,13 @@ test('impendingMatchLocation finds impending matches', () => {
     ]
     expect(ai.impendingMatchLocation(grid, x)).toEqual(false)
     expect(ai.impendingMatchLocation(grid, y)).toEqual(false)
+    grid = [
+        [u,x,u],
+        [u,y,u],
+        [u,y,u]
+    ]
+    expect(ai.impendingMatchLocation(grid, x)).toEqual(false)
+    expect(ai.impendingMatchLocation(grid, y)).toEqual(false)
 })   
 
 test('ai function plays correct opening move', () => {
