@@ -1,7 +1,9 @@
 /* Generator function for creating session controller objects
 manages game session activities like adding players,
 starting the game, tracking who's turn it is and only
-allowing players to place a move when it is their turn
+allowing players to place a move when it is their turn.
+Constructed with an object that handles the game rules
+and the number of players.
 */
 
 const deepFreeze = require('deep-freeze')
@@ -12,6 +14,7 @@ const cantAddPlayer = 'cannot add additional players';
 const startingGame = 'starting game';
 const notEnoughPlayers = 'not enough players';
 const alreadyStarted = 'game already started';
+const notYourTurn = 'not your turn'
 
 const messages = {
     addPlayer: {
@@ -23,6 +26,9 @@ const messages = {
         startingGame,
         notEnoughPlayers,
         alreadyStarted
+    },
+    placeMove:{
+        notYourTurn
     }
 }
 deepFreeze(messages);
@@ -32,6 +38,13 @@ function newSessionController(game, numberOfPlayers) {
     let players = [];
     let gameHasStarted = false;
     let currentPlayerTurn
+
+    function changeTurn() {
+        let playerIndex = players.indexOf(currentPlayerTurn);
+        playerIndex = playerIndex === players.length - 1 ?
+            0 : playerIndex + 1;
+        currentPlayerTurn = players[playerIndex]
+    }
 
     let publicMethods = {
         addPlayer(player) {
@@ -52,7 +65,14 @@ function newSessionController(game, numberOfPlayers) {
                 return startingGame
             }
             return notEnoughPlayers;
-        }
+        },
+
+        placeMove(move, player){
+            if(player !== currentPlayerTurn) return notYourTurn;
+            let result = game.play(move);
+            if (game.isValidMove(result)) changeTurn();
+            return result;
+        },
     }
     return publicMethods;
 }
