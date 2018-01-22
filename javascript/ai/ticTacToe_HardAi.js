@@ -31,15 +31,18 @@ function chooseMove (gameState, aiToken, opponentToken) {
 
     function findWinningMove () {
         //check to see if any winning moves are available
+        if(openingMove) return false;
     }
 
     function findImpendingMatches () {
         //check the board to see if opponent can win on next turn
+        if(openingMove || winningMove) return false;
     }
     
     function createImpendingWin () {
         //place a move that creates an impending win and if possible
         //an additional potential match
+        if(openingMove || winningMove || requiredBlockingMove) return false;
     }
 }
 
