@@ -4,21 +4,23 @@ level which means that it cannot be beaten.
 Strategy:
 Rule 1) If a winning move is available, take it!
 
-Rule 2) If available always pick the center square as your first move.
+Rule 2) if your opponent has an impending match you must block it
+
+Rule 3) If available always pick the center square as your first move.
 If the center is unavailable pick a corner (top left by convention)
 
-Rule 3) if your opponent has an impending match you must block it
-
 Rule 4) if no impending match exists, pick a space that gives you
-an impending match and, if available, an additional potential match.
+an impending match.
+
+Rule 5) if no other rule applies, pick a random space
 */
 
 function chooseMove (gameState, aiToken, opponentToken) {
     let openingMove = findOpeningMove();
-    let winningMove = findWinningMove()
+    let winningMove = findWinningMove();
     let requiredBlockingMove = findImpendingMatches();
-    let bestAvailableMove = createImpendingWin()
-    return openingMove || winningMove || requiredBlockingMove || bestAvailableMove;
+    let impendingWinMove = createImpendingWin();
+    return openingMove || winningMove || requiredBlockingMove || impendingWinMove;
     
 
     function findOpeningMove () {
@@ -60,6 +62,31 @@ function chooseMove (gameState, aiToken, opponentToken) {
         //place a move that creates an impending win and if possible
         //an additional potential match
         if(openingMove || winningMove || requiredBlockingMove) return false;
+        return firstImpendingWin()
+
+        function firstImpendingWin () {
+            for(let i = 0; i < 3; i++) {
+                for(let j = 0; j < 3; j++) {
+                    if(!gameState[i][j]){
+                        let move = testLocation(j, i);
+                        if(move) return move;
+                    }
+                    
+                }
+            }
+            return false;
+        }
+        
+        function testLocation (x, y) {
+            let copy = duplicateGrid(gameState);
+            copy[y][x] = aiToken;
+            if(impendingMatchLocation(copy, aiToken)) return {x, y};
+            return false;
+        }
+
+        function duplicateGrid (grid) {
+            return grid.map((row) => row.map((element) => element));
+        }
     }
 }
 

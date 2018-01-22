@@ -249,6 +249,33 @@ test('checkGridForMatches correctly identifies rows, columns, or diagonals of ma
     expect(checkGridForMatches(y, grid)).toEqual(false);
 })
 
+test('ai creates impending move when available and blocking/winning is not required', () => {
+    let a = 'ai';
+    let p = 'player'
+    let u = undefined
+    let grid = [
+        [u,p,u],
+        [u,a,u],
+        [u,u,u]
+    ]
+    let move = ai.chooseMove(grid, a, p)
+    expect(move).toEqual({x: 0, y: 0})
+    grid = [
+        [a,u,u],
+        [u,p,u],
+        [u,u,u]
+    ]
+    move = ai.chooseMove(grid, a, p)
+    expect(move).toEqual({x: 1, y: 0})
+    grid = [
+        [a,p,u],
+        [u,a,u],
+        [u,u,p]
+    ]
+    move = ai.chooseMove(grid, a, p)
+    expect(move).toEqual({x: 2, y: 0})
+})
+
 test('proof that ai always wins or gets stalemate', () => {
     expect(playerCanWinAgainstAi()).toBe(false)
 })
