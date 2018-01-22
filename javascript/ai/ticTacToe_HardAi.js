@@ -102,7 +102,34 @@ function impendingMatchLocation(gameState) {
         }
 
         function checkDiagonals () {
-            //TODO
+            let topLeftToBottomRight = [gameState[0][0], gameState[1][1], gameState[2][2]];
+            let bottomLeftToTopRight = [gameState[2][0], gameState[1][1], gameState[0][2]];
+            return findAndSetMatches();
+
+            function findAndSetMatches() {
+                let matches = checkForMatches()
+                if(!matches) return false;
+                setCoordinatesAndPlayer(matches)
+                return true;
+            }
+
+            function checkForMatches() {
+                if(twoSameAndOneEmpty(topLeftToBottomRight)) return 'tlbr';
+                if(twoSameAndOneEmpty(bottomLeftToTopRight)) return 'bltr';
+                return false;
+            }
+
+            function setCoordinatesAndPlayer(matches) {
+                if(matches === 'tlbr') {
+                    let emptyIndex = topLeftToBottomRight.map((e) => !!e).indexOf(false);
+                    unfilledCoordinates = [{x:0,y:0},{x:1,y:1},{x:2,y:2}][emptyIndex];
+                    playerAboutToWin = topLeftToBottomRight.filter((e) => !!e)[0];
+                } else {
+                    let emptyIndex = bottomLeftToTopRight.map((e) => !!e).indexOf(false);
+                    unfilledCoordinates = [{x:0,y:2},{x:1,y:1},{x:2,y:0}][emptyIndex];
+                    playerAboutToWin = bottomLeftToTopRight.filter((e) => !!e)[0];
+                }
+            }
         }
     }
 }

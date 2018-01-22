@@ -76,7 +76,55 @@ test('impendingMatchLocation finds impending matches', () => {
     ]
     expectedMatch = false;
     expect(ai.impendingMatchLocation(grid)).toEqual(expectedMatch)
-    
+
     //find diagonals
-    //TODO
+    grid = [
+        [x,u,u],
+        [u,x,y],
+        [u,y,u]
+    ]
+    expectedMatch = {
+        unfilledCoordinates: {
+            x: 2,
+            y: 2
+        },
+        playerAboutToWin: x
+    }
+    expect(ai.impendingMatchLocation(grid)).toEqual(expectedMatch)
+    
+    grid = [
+        [x,u,u],
+        [u,y,x],
+        [y,u,u]
+    ]
+    expectedMatch = {
+        unfilledCoordinates: {
+            x: 2,
+            y: 0
+        },
+        playerAboutToWin: y
+    }
+    expect(ai.impendingMatchLocation(grid)).toEqual(expectedMatch)
+    
+    grid = [
+        [x,u,u],
+        [u,u,u],
+        [y,u,x]
+    ]
+    expectedMatch = {
+        unfilledCoordinates: {
+            x: 1,
+            y: 1
+        },
+        playerAboutToWin: x
+    }
+    expect(ai.impendingMatchLocation(grid)).toEqual(expectedMatch)
+
+    grid = [
+        [x,u,u],
+        [u,u,x],
+        [y,u,u]
+    ]
+    expectedMatch = false;
+    expect(ai.impendingMatchLocation(grid)).toEqual(expectedMatch)
 })
