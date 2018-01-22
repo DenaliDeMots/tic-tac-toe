@@ -47,11 +47,13 @@ function chooseMove (gameState, aiToken, opponentToken) {
     function findWinningMove () {
         //check to see if any winning moves are available
         if(openingMove) return false;
+        return impendingMatchLocation(gameState, aiToken);
     }
 
     function findImpendingMatches () {
         //check the board to see if opponent can win on next turn
         if(openingMove || winningMove) return false;
+        return impendingMatchLocation(gameState, opponentToken)
     }
     
     function createImpendingWin () {

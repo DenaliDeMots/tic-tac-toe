@@ -127,6 +127,58 @@ test('ai function plays correct opening move', () => {
     expect(move).toEqual({x: 0, y: 0})
 })
 
+test('ai function chooses winning move', () => {
+    let a = 'ai';
+    let p = 'player'
+    let grid = [
+        [a,a,u],
+        [u,p,u],
+        [u,u,u]
+    ]
+    let move = ai.chooseMove(grid, a, p)
+    expect(move).toEqual({x: 2, y: 0})
+    grid = [
+        [p,a,u],
+        [p,a,u],
+        [u,u,u]
+    ]
+    move = ai.chooseMove(grid, a, p)
+    expect(move).toEqual({x: 1, y: 2})
+    grid = [
+        [u,u,u],
+        [u,a,p],
+        [a,u,p]
+    ]
+    move = ai.chooseMove(grid, a, p)
+    expect(move).toEqual({x: 2, y: 0})
+})
+
+test('ai blocks impending loss', () => {
+    let a = 'ai';
+    let p = 'player'
+    let grid = [
+        [a,p,u],
+        [u,p,u],
+        [u,u,u]
+    ]
+    let move = ai.chooseMove(grid, a, p)
+    expect(move).toEqual({x: 1, y: 2})
+    grid = [
+        [u,u,u],
+        [u,a,u],
+        [p,p,u]
+    ]
+    move = ai.chooseMove(grid, a, p)
+    expect(move).toEqual({x: 2, y: 2})
+    grid = [
+        [u,u,u],
+        [u,p,u],
+        [a,u,p]
+    ]
+    move = ai.chooseMove(grid, a, p)
+    expect(move).toEqual({x: 0, y: 0})
+})
+
 test('checkGridForMatches correctly identifies rows, columns, or diagonals of matching elements', () => {
     //matches rows
     let grid = [
