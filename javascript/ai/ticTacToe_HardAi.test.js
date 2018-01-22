@@ -283,6 +283,31 @@ test('ai creates impending move when available and blocking/winning is not requi
     expect(move).toEqual({x: 2, y: 0})
 })
 
+test('ai plays random moves when no other options are available', () => {
+    let a = 'ai';
+    let p = 'player'
+    let grid = [
+        [a,a,p],
+        [p,a,a],
+        [u,p,p]
+    ]
+    let move = ai.chooseMove(grid, a, p)
+    expect(move).toEqual({x: 0, y: 2})
+    grid = [
+        [a,u,p],
+        [p,a,a],
+        [a,p,p]
+    ]
+    move = ai.chooseMove(grid, a, p)
+    expect(move).toEqual({x: 1, y: 0})
+    grid = [
+        [a,a,p],
+        [p,p,a],
+        [a,u,p]
+    ]
+    move = ai.chooseMove(grid, a, p)
+    expect(move).toEqual({x: 1, y: 2})
+})
 test('proof that ai always wins or gets stalemate', () => {
     expect(playerCanWinAgainstAi()).toBe(false)
 })

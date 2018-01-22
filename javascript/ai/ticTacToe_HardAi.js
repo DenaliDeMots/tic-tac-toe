@@ -20,7 +20,8 @@ function chooseMove (gameState, aiToken, opponentToken) {
     let winningMove = findWinningMove();
     let requiredBlockingMove = findImpendingMatches();
     let impendingWinMove = createImpendingWin();
-    return openingMove || winningMove || requiredBlockingMove || impendingWinMove;
+    let randomMove = createRandomMove();
+    return openingMove || winningMove || requiredBlockingMove || impendingWinMove || randomMove;
     
 
     function findOpeningMove () {
@@ -87,6 +88,15 @@ function chooseMove (gameState, aiToken, opponentToken) {
         function duplicateGrid (grid) {
             return grid.map((row) => row.map((element) => element));
         }
+    }
+
+    function createRandomMove () {
+        for(let i = 0; i < 3; i++){
+            for(let j = 0; j < 3; j++){
+                if(!gameState[i][j]) return {x: j, y: i};
+            }
+        }
+        return false;
     }
 }
 
