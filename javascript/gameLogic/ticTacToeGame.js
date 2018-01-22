@@ -102,6 +102,22 @@ function newTicTacToeGame(player1Token, player2Token) {
                 changeTurn();
                 return turn === player1 ? player2PlacedToken : player1PlacedToken
             }
+        },
+
+        isAValidMoveMessage(message) {
+            return (
+                message === player1PlacedToken
+                || message === player2PlacedToken
+                || message === stalemate
+                || isWinMessage(message)
+            );
+
+            function isWinMessage (message) {
+                return (
+                    Array.isArray(message)
+                    && message[0].hasOwnProperty('matchType')
+                );
+            }
         }
     }
 
