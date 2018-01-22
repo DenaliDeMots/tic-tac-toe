@@ -22,7 +22,26 @@ function chooseMove (gameState, aiToken, opponentToken) {
     
 
     function findOpeningMove () {
-        //check to see if the board is empty
+        //check to see if the board is empty or has a single token
+        if(boardIsEmpty()) return {x: 1, y: 1};
+        if(boardHasOneToken())return tokenInCenter() ? {x: 0, y: 0} : {x: 1, y: 1};
+        return false;
+
+        function boardIsEmpty() {
+            return gameState.every((row) => row.every((e) => !e))
+        }
+
+        function boardHasOneToken () {
+            let tokenCount = 0;
+            gameState.map((row) => row.map((element) => {
+                if(element) tokenCount += 1;
+            }))
+            return tokenCount === 1;
+        }
+
+        function tokenInCenter () {
+            return gameState[1][1]
+        }
     }
 
     function findWinningMove () {

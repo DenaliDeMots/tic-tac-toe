@@ -129,6 +129,36 @@ test('impendingMatchLocation finds impending matches', () => {
     expect(ai.impendingMatchLocation(grid)).toEqual(expectedMatch)
 })
 
+test('ai function plays correct opening move', () => {
+    //ai plays in center when available
+    let a = 'ai';
+    let p = 'player'
+    let grid = [
+        [u,u,u],
+        [u,u,u],
+        [u,u,u]
+    ]
+    let move = ai.chooseMove(grid, a, p)
+    expect(move).toEqual({x: 1, y: 1})
+
+    grid = [
+        [u,u,u],
+        [p,u,u],
+        [u,u,u]
+    ]
+    move = ai.chooseMove(grid, a, p)
+    expect(move).toEqual({x: 1, y: 1})
+
+    //ai playes in top left corner when center is unavailable
+    grid = [
+        [u,u,u],
+        [u,p,u],
+        [u,u,u]
+    ]
+    move = ai.chooseMove(grid, a, p)
+    expect(move).toEqual({x: 0, y: 0})
+})
+
 test('checkGridForMatches correctly identifies rows, columns, or diagonals of matching elements', () => {
     //matches rows
     let grid = [
