@@ -76,6 +76,10 @@ function newSessionController(game, numberOfPlayers) {
 
         getCurrentTurn() {
             return currentPlayerTurn;
+        },
+
+        getCurrentGameState() {
+            return game.getCurrentGameState();
         }
     }
     return publicMethods;

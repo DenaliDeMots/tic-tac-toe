@@ -14,12 +14,20 @@ const notYourTurn = placeMoveMessages.notYourTurn;
 
 const validMove = 'you made a valid move';
 const illegalMove = 'you made an illegal move';
+let gameState = 0;
 const gameMock = {
     play(move){
+        gameState++;
         return move;
     },
     isValidMove(result){
         return result === validMove;
+    },
+    getCurrentGameState(){
+        return gameState;
+    },
+    resetGameState(){
+        gameState = 0;
     }
 };
 
@@ -92,16 +100,33 @@ test('place move updates game only on valid moves', () =>{
 })
 
 test('getCurrentTurn returns the correct turn', () => {
-  //create a controller for a 2 player game, add players, and start game
-  const controller = sessionController.newSessionController(gameMock, 2);
-  controller.addPlayer(player1);
-  controller.addPlayer(player2);
-  controller.startGame();
-  //game starts with player 1
-  let currentPlayer = controller.getCurrentTurn()
-  expect(currentPlayer).toEqual(player1);
-  //current player updates correctly when the turn changes
-  controller.placeMove(validMove, player1);
-  currentPlayer = controller.getCurrentTurn();
-  expect(currentPlayer).toEqual(player2);
+    //create a controller for a 2 player game, add players, and start game
+    const controller = sessionController.newSessionController(gameMock, 2);
+    controller.addPlayer(player1);
+    controller.addPlayer(player2);
+    controller.startGame();
+    //game starts with player 1
+    let currentPlayer = controller.getCurrentTurn()
+    expect(currentPlayer).toEqual(player1);
+    //current player updates correctly when the turn changes
+    controller.placeMove(validMove, player1);
+    currentPlayer = controller.getCurrentTurn();
+    expect(currentPlayer).toEqual(player2);
+})
+
+test('getCurrentGameState gets the game state from the game object', () => {
+    gameMock.resetGameState();
+    //create a controller for a 2 player game, add players, and start game
+    const controller = sessionController.newSessionController(gameMock, 2);
+    controller.addPlayer(player1);
+    controller.addPlayer(player2);
+    controller.startGame();
+    let currentGameState = controller.getCurrentGameState();
+    expect(currentGameState).toBe(0);
+    controller.placeMove(validMove, player1);
+    currentGameState = controller.getCurrentGameState();
+    expect(currentGameState).toBe(1);
+    controller.placeMove(validMove, player2);
+    currentGameState = controller.getCurrentGameState();
+    expect(currentGameState).toBe(2);
 })
