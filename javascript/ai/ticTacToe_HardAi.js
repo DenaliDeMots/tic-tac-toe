@@ -18,11 +18,7 @@ function chooseMove (gameState, aiToken, opponentToken) {
     let winningMove = findWinningMove()
     let requiredBlockingMove = findImpendingMatches();
     let createImpendingWin = createImpendingWin()
-    return
-        openingMove ? openingMove :
-            winningMove ? winningMove :
-                requiredBlockingMove ? requiredBlockingMove :
-                    createImpendingWin;
+    return openingMove || winningMove || requiredBlockingMove || createImpendingWin;
     
 
     function findOpeningMove () {
