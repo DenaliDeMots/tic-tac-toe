@@ -61,12 +61,10 @@ function chooseMove (gameState, aiToken, opponentToken) {
     }
 }
 
-function impendingMatchLocation(gameState) {
+function impendingMatchLocation(gameState, player) {
     let unfilledCoordinates = false;
-    let playerAboutToWin = false;
     return find2TheSameAndOneEmpty() ?
-        {   unfilledCoordinates,
-            playerAboutToWin}
+        unfilledCoordinates
         : false
 
     function find2TheSameAndOneEmpty () {
@@ -77,22 +75,21 @@ function impendingMatchLocation(gameState) {
 
         function twoSameAndOneEmpty (threeElementArry){
             //filter out falsey values
-            let marks = threeElementArry.filter((mark) => !!mark)
-            return marks.length === 2 && marks[0] === marks[1]
+            let marks = threeElementArry.filter((mark) => mark === player)
+            return marks.length === 2;
         }
 
         function checkRows () {
             let rows = gameState.map((row) => twoSameAndOneEmpty(row))
             let rowMatchIndex = rows.indexOf(true)
             if (rowMatchIndex === -1) return false;
-            setCoordinatesAndPlayer();
+            setCoordinates();
             return true;
 
-            function setCoordinatesAndPlayer () {
+            function setCoordinates () {
                 let matchingRow = gameState[rowMatchIndex]
                 let columnMatchIndex = matchingRow.map((e) => !!e).indexOf(false);
                 unfilledCoordinates = {x: columnMatchIndex, y: rowMatchIndex}
-                playerAboutToWin = matchingRow.filter((e) => !!e)[0]
             }
         }
 
@@ -101,7 +98,7 @@ function impendingMatchLocation(gameState) {
             let columns = rotatedGrid.map((column) => twoSameAndOneEmpty(column));
             let columnMatchIndex = columns.indexOf(true);
             if(columnMatchIndex === -1) return false;
-            setCoordinatesAndPlayer();
+            setCoordinates();
             return true;
 
             function columnsAsRows(grid) {
@@ -112,11 +109,10 @@ function impendingMatchLocation(gameState) {
                 return rotGrid;
             }
 
-            function setCoordinatesAndPlayer () {
+            function setCoordinates () {
                 let matchingColumn = rotatedGrid[columnMatchIndex]
                 let rowMatchIndex = matchingColumn.map((e) => !!e).indexOf(false);
                 unfilledCoordinates = {x: columnMatchIndex, y: rowMatchIndex}
-                playerAboutToWin = matchingColumn.filter((e) => !!e)[0]
             }
         }
 
@@ -128,7 +124,7 @@ function impendingMatchLocation(gameState) {
             function findAndSetMatches() {
                 let matches = checkForMatches()
                 if(!matches) return false;
-                setCoordinatesAndPlayer(matches)
+                setCoordinates(matches)
                 return true;
             }
 
@@ -138,15 +134,13 @@ function impendingMatchLocation(gameState) {
                 return false;
             }
 
-            function setCoordinatesAndPlayer(matches) {
+            function setCoordinates(matches) {
                 if(matches === 'tlbr') {
                     let emptyIndex = topLeftToBottomRight.map((e) => !!e).indexOf(false);
                     unfilledCoordinates = [{x:0,y:0},{x:1,y:1},{x:2,y:2}][emptyIndex];
-                    playerAboutToWin = topLeftToBottomRight.filter((e) => !!e)[0];
                 } else {
                     let emptyIndex = bottomLeftToTopRight.map((e) => !!e).indexOf(false);
                     unfilledCoordinates = [{x:0,y:2},{x:1,y:1},{x:2,y:0}][emptyIndex];
-                    playerAboutToWin = bottomLeftToTopRight.filter((e) => !!e)[0];
                 }
             }
         }

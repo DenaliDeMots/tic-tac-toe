@@ -11,123 +11,91 @@ test('impendingMatchLocation finds impending matches', () => {
         [u,y,u],
         [u,u,u]
     ]
-    let expectedMatch = {
-        unfilledCoordinates: {
+    let expectedCoordinates = {
             x: 1,
             y: 0
-        },
-        playerAboutToWin: x
-    }
-    expect(ai.impendingMatchLocation(grid)).toEqual(expectedMatch)
+        }
+    expect(ai.impendingMatchLocation(grid, x)).toEqual(expectedCoordinates)
+    expect(ai.impendingMatchLocation(grid, y)).toEqual(false)
     grid = [
         [x,u,u],
-        [u,y,x],
-        [y,y,u]
+        [u,y,y],
+        [u,u,u]
     ]
-    expectedMatch = {
-        unfilledCoordinates: {
+    expectedCoordinates = {
+            x: 0,
+            y: 1
+        }
+    expect(ai.impendingMatchLocation(grid, x)).toEqual(false)
+    expect(ai.impendingMatchLocation(grid, y)).toEqual(expectedCoordinates)
+    grid = [
+        [x,u,u],
+        [u,y,u],
+        [x,x,u]
+    ]
+    expectedCoordinates = {
             x: 2,
             y: 2
-        },
-        playerAboutToWin: y
-    }
-    expect(ai.impendingMatchLocation(grid)).toEqual(expectedMatch)
-    grid = [
-        [x,u,u],
-        [u,u,x],
-        [u,y,u]
-    ]
-    expectedMatch = false
-    expect(ai.impendingMatchLocation(grid)).toEqual(expectedMatch)
+        }
+    expect(ai.impendingMatchLocation(grid, x)).toEqual(expectedCoordinates)
+    expect(ai.impendingMatchLocation(grid, y)).toEqual(false)
 
     //find columns
     grid = [
         [x,u,u],
+        [u,y,u],
+        [x,u,u]
+    ]
+    expectedCoordinates = {
+            x: 0,
+            y: 1
+        }
+    expect(ai.impendingMatchLocation(grid, x)).toEqual(expectedCoordinates)
+    expect(ai.impendingMatchLocation(grid, y)).toEqual(false)
+    grid = [
+        [x,u,u],
         [u,y,x],
         [u,y,u]
     ]
-    expectedMatch = {
-        unfilledCoordinates: {
+    expectedCoordinates = {
             x: 1,
             y: 0
-        },
-        playerAboutToWin: y
-    }
-    expect(ai.impendingMatchLocation(grid)).toEqual(expectedMatch)
-    
-    grid = [
-        [x,u,u],
-        [u,y,x],
-        [x,u,y]
-    ]
-    expectedMatch = {
-        unfilledCoordinates: {
-            x: 0,
-            y: 1
-        },
-        playerAboutToWin: x
-    }
-    expect(ai.impendingMatchLocation(grid)).toEqual(expectedMatch)
-
-    grid = [
-        [x,u,u],
-        [u,u,x],
-        [y,u,u]
-    ]
-    expectedMatch = false;
-    expect(ai.impendingMatchLocation(grid)).toEqual(expectedMatch)
-
+        }
+    expect(ai.impendingMatchLocation(grid, x)).toEqual(false)
+    expect(ai.impendingMatchLocation(grid, y)).toEqual(expectedCoordinates)
     //find diagonals
     grid = [
         [x,u,u],
-        [u,x,y],
+        [u,x,u],
         [u,y,u]
     ]
-    expectedMatch = {
-        unfilledCoordinates: {
+    expectedCoordinates = {
             x: 2,
             y: 2
-        },
-        playerAboutToWin: x
-    }
-    expect(ai.impendingMatchLocation(grid)).toEqual(expectedMatch)
-    
+        }
+    expect(ai.impendingMatchLocation(grid, x)).toEqual(expectedCoordinates)
+    expect(ai.impendingMatchLocation(grid, y)).toEqual(false)
     grid = [
-        [x,u,u],
-        [u,y,x],
-        [y,u,u]
+        [x,u,y],
+        [u,y,u],
+        [u,x,u]
     ]
-    expectedMatch = {
-        unfilledCoordinates: {
-            x: 2,
-            y: 0
-        },
-        playerAboutToWin: y
-    }
-    expect(ai.impendingMatchLocation(grid)).toEqual(expectedMatch)
-    
-    grid = [
-        [x,u,u],
-        [u,u,u],
-        [y,u,x]
-    ]
-    expectedMatch = {
-        unfilledCoordinates: {
-            x: 1,
-            y: 1
-        },
-        playerAboutToWin: x
-    }
-    expect(ai.impendingMatchLocation(grid)).toEqual(expectedMatch)
+    expectedCoordinates = {
+            x: 0,
+            y: 2
+        }
+    expect(ai.impendingMatchLocation(grid, x)).toEqual(false)
+    expect(ai.impendingMatchLocation(grid, y)).toEqual(expectedCoordinates)
 
+    //no match for grids with no impending matches
     grid = [
         [x,u,u],
-        [u,u,x],
-        [y,u,u]
+        [u,y,u],
+        [u,x,u]
     ]
-    expectedMatch = false;
-    expect(ai.impendingMatchLocation(grid)).toEqual(expectedMatch)
-})
+    expect(ai.impendingMatchLocation(grid, x)).toEqual(false)
+    expect(ai.impendingMatchLocation(grid, y)).toEqual(false)
+})   
 
 test('ai function plays correct opening move', () => {
     //ai plays in center when available
