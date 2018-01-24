@@ -2,12 +2,6 @@ let inquirer = require('inquirer');
 let chalk = require('chalk');
 let game = require('../ticTacToe');
 
-
-let background = chalk.bgWhite
-let X = chalk.red
-let O = chalk.green
-let menu = chalk.green
-
 let gameType = [{
     type: 'list',
     name: 'game type',
@@ -56,13 +50,17 @@ function play() {
         ['X',' ','O']
     ]
 
-    let renderedGrid = render(grid)
-    console.log(renderedGrid);
+    console.log(render(grid));
 
     function render(grid) {
         return ('  A B C \n' + 
             grid.map((row, index) => {
-                return (index + 1) + ' ' + row.join('|')
+                let coloredRow = row.map((symbol) => {
+                    if(symbol === 'X') return chalk.red(symbol);
+                    if(symbol === 'O') return chalk.green(symbol);
+                    return symbol;
+                })
+                return (index + 1) + ' ' + coloredRow.join('|')
             }).join('\n  -+-+- \n') + '\n\n')
     }
     
