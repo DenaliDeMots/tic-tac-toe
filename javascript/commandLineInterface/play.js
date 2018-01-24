@@ -1,3 +1,5 @@
+import { normalize } from 'path';
+
 let inquirer = require('inquirer');
 let chalk = require('chalk');
 let game = require('../ticTacToe');
@@ -144,10 +146,16 @@ function play() {
         validate: validateMove
     }]
 
+    inquirer.prompt(playMove).then((answers) => {
+        let move = toMoveObject(normalizeMove(answers.move));
+        play();
+    })
+
+    // helper functions
     function validateMove(move){
         let errorMessage = 'Invalid move. Please place a move like 1A or b3'
         if(move.length !== 2) return errorMessage;
-        normalizeMove()
+        move = normalizeMove(move)
         if(!moveIsValidCoordinate()) return errorMessage;
         return true;
 
@@ -159,25 +167,39 @@ function play() {
             ]
             return validMoves.includes(move)
         }
+    }
 
-        function normalizeMove() {
-            move = move.toLowerCase()
-            if(!firstCharacterIsADigit(move)) move = reverseString(move);
+    function normalizeMove(move) {
+        move = move.toLowerCase()
+        if(!firstCharacterIsADigit(move)) move = reverseString(move);
+        return move;
 
-            function firstCharacterIsADigit(string) {
-                let code = string.charCodeAt(0);
-                return code >= 48 && code <= 57
-            }
+        function firstCharacterIsADigit(string) {
+            let code = string.charCodeAt(0);
+            return code >= 48 && code <= 57
+        }
 
-            function reverseString(string){
-                return string.split('').reverse().join('')
-            }
+        function reverseString(string){
+            return string.split('').reverse().join('')
         }
     }
 
-    inquirer.prompt(playMove).then((answers) => {
-        play();
-    })
+    function toMoveObject(move) {
+        let xConversion = {
+            a: 0,
+            b: 1,
+            c: 2
+        }
+        let yConversion = {
+            1: 0,
+            2: 1,
+            3: 2
+        }
+        return {
+            x: xConversion[move.slice(1,2)],
+            y: yConversion[move.slice(0,1)]
+        }
+    }
 }
 
 startGame();
