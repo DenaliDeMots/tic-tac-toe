@@ -133,7 +133,11 @@ function play() {
         gameOver(winningPlayer)
     } else {
         computerMove()
-        playNextMove()
+        if(winner || gameState === 'stalemate'){
+            gameOver(winningPlayer)
+        } else {
+            playNextMove()
+        }
     }
 
     // helper functions
@@ -149,7 +153,7 @@ function play() {
             playMove();
             checkForWin()
             console.log(render(grid));
-            next()
+            switchPlayers()
 
             function playMove() {
                 gameState = computer.playMove(move);
@@ -162,13 +166,6 @@ function play() {
                 grid = computer.getCurrentGameState()
                 winner = hasWinner()
                 winningPlayer = winner ? getWinningPlayer() : false
-            }
-
-            function next () {
-                switchPlayers()
-                if(winner || gameState === 'stalemate'){
-                    gameOver(winningPlayer)
-                }
             }
         }
     }
