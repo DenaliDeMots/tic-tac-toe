@@ -128,12 +128,12 @@ function play() {
     let winner = hasWinner()
     let winningPlayer = winner ? getWinningPlayer() : false
     console.log(render(grid));
-    if(winner){
+    if(winner || gameState === 'stalemate'){
         gameOver(winningPlayer)
     } else {
         playNextMove()
     }
-    
+
     // helper functions
     function playNextMove(){
         inquirer.prompt(playMove()).then((answers) => {
@@ -288,8 +288,12 @@ function play() {
 }
 
 function gameOver(winningPlayer){
-    player = winningPlayer === player1Symbol ? 'Player 1' : 'Player 2'
-    console.log(player + ' has won the game!')
+    if(winningPlayer){
+        let player = winningPlayer === player1Symbol ? 'Player 1' : 'Player 2'
+        console.log(player + ' has won the game!')
+    } else {
+        console.log('The game has ended in stalemate')
+    }
 }
 
 startGame();
