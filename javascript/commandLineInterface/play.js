@@ -11,6 +11,7 @@ let player1;
 let player2;
 let currentPlayer;
 let gameState;
+let winner =  false
 let playedMoves = []
 
 function startGame() {
@@ -126,7 +127,7 @@ function chooseSymbols() {
 function play() {
     //play tic tac toe game
     let grid = player1.getCurrentGameState()
-    let winner = hasWinner()
+    winner = hasWinner()
     let winningPlayer = winner ? getWinningPlayer() : false
     console.log(render(grid));
     if(winner || gameState === 'stalemate'){
@@ -177,51 +178,6 @@ function play() {
             switchPlayers();
             play();
         })
-    }
-
-    function render(grid) {
-        return ('  A B C \n' + 
-            grid.map((row, y) => {
-                let coloredRow = row.map((symbol, x) => {
-                    if(!symbol) return ' '
-                    if(symbol === player1Symbol) return P1({x,y})(symbol);
-                    if(symbol === player2Symbol) return P2({x,y})(symbol);
-                    return symbol;
-                })
-                return (y + 1) + ' ' + coloredRow.join('|')
-            }).join('\n  -+-+- \n') + '\n\n')
-    }
-
-    function P1(coordinates){
-        if(!winner) return chalk.red;
-        if(includesCoordinates()){
-            return chalk.red.bgWhite
-        } else {
-            return chalk.red
-        }
-
-        function includesCoordinates(){
-            return winner.find((coord) =>{
-                return coord.x === coordinates.x &&
-                    coord.y === coordinates.y
-            })
-        }
-    }
-
-    function P2(coordinates){
-        if(!winner) return chalk.green;
-        if(includesCoordinates()){
-            return chalk.green.bgWhite
-        } else {
-            return chalk.green
-        }
-
-        function includesCoordinates(){
-            return winner.find((coord) =>{
-                return coord.x === coordinates.x &&
-                    coord.y === coordinates.y
-            })
-        }
     }
 
     function M(player){
@@ -410,7 +366,53 @@ function playAgain() {
         player2 = undefined;
         currentPlayer = undefined;
         gameState = undefined;
+        winner =  false;
         playedMoves = []
+    }
+}
+
+function render(grid) {
+    return ('  A B C \n' + 
+        grid.map((row, y) => {
+            let coloredRow = row.map((symbol, x) => {
+                if(!symbol) return ' '
+                if(symbol === player1Symbol) return P1({x,y})(symbol);
+                if(symbol === player2Symbol) return P2({x,y})(symbol);
+                return symbol;
+            })
+            return (y + 1) + ' ' + coloredRow.join('|')
+        }).join('\n  -+-+- \n') + '\n\n')
+}
+
+function P1(coordinates){
+    if(!winner) return chalk.red;
+    if(includesCoordinates()){
+        return chalk.red.bgWhite
+    } else {
+        return chalk.red
+    }
+
+    function includesCoordinates(){
+        return winner.find((coord) =>{
+            return coord.x === coordinates.x &&
+                coord.y === coordinates.y
+        })
+    }
+}
+
+function P2(coordinates){
+    if(!winner) return chalk.green;
+    if(includesCoordinates()){
+        return chalk.green.bgWhite
+    } else {
+        return chalk.green
+    }
+
+    function includesCoordinates(){
+        return winner.find((coord) =>{
+            return coord.x === coordinates.x &&
+                coord.y === coordinates.y
+        })
     }
 }
 
