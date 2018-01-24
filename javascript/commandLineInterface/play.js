@@ -283,7 +283,7 @@ function play() {
 
     function getWinningPlayer() {
         let {x, y} = winner[0]
-        return gameState[y][x]
+        return grid[y][x]
     }
 }
 
