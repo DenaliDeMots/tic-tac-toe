@@ -420,4 +420,45 @@ function switchPlayers() {
     }
 }
 
+function computerFight() {
+    let playerSymbol = player1Symbol;
+    let opponentSymbol = player2Symbol;
+    let gameState = currentPlayer.getCurrentGameState();
+    console.log(render(gameState));
+    fight()
+
+    function fight(){
+        move()
+        console.log(render(gameState))
+        if(victory()){
+            gameOver(playerSymbol)
+        } else {
+            swap()
+            setTimeout(fight, 1000)
+        }
+            
+        function move() {
+            let move = ai.chooseMove(gameState, playerSymbol, opponentSymbol)
+            moveResult = currentPlayer.playMove(move);
+            gameState = currentPlayer.getCurrentGameState()
+        }
+
+        function swap() {
+            switchPlayers();
+            switchSymbols();
+        }
+
+        function switchSymbols () {
+            let swap = playerSymbol;
+            playerSymbol = opponentSymbol;
+            opponentSymbol = swap;
+        }
+        
+        function victory() {
+            return Array.isArray(moveResult) || moveResult === 'stalemate'
+        }
+    }
+
+}
+
 startGame();
