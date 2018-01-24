@@ -10,6 +10,7 @@ let player1;
 let player2;
 let currentPlayer;
 let gameState;
+let playedMoves = []
 
 function startGame() {
     let gameType = [{
@@ -143,14 +144,15 @@ function play() {
     let playMove = [{
         type: 'input',
         name: 'move',
-        message: 'please choose a row and column',
+        message: ((currentPlayer === player1 ? 'Player 1' : 'Player 2')
+            + ' please choose a row and column'),
         validate: validateMove
     }]
 
     inquirer.prompt(playMove).then((answers) => {
-        let move = toMoveObject(normalizeMove(answers.move));
-        gameState = currentPlayer.playMove(move)
-        switchPlayers()
+        let move = recordAndConvert(answers.move);
+        gameState = currentPlayer.playMove(move);
+        switchPlayers();
         play();
     })
 
@@ -160,6 +162,7 @@ function play() {
         if(move.length !== 2) return errorMessage;
         move = normalizeMove(move)
         if(!moveIsValidCoordinate()) return errorMessage;
+        if(playedMoves.includes(move)) return 'That space is already taken'
         return true;
 
         function moveIsValidCoordinate(){
@@ -170,6 +173,12 @@ function play() {
             ]
             return validMoves.includes(move)
         }
+    }
+    
+    function recordAndConvert (move) {
+        move = normalizeMove(move)
+        playedMoves.push(move)
+        return toMoveObject(move);
     }
 
     function normalizeMove(move) {
