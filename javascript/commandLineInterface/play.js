@@ -146,15 +146,47 @@ function play() {
 
     function render(grid) {
         return ('  A B C \n' + 
-            grid.map((row, index) => {
-                let coloredRow = row.map((symbol) => {
+            grid.map((row, y) => {
+                let coloredRow = row.map((symbol, x) => {
                     if(!symbol) return ' '
-                    if(symbol === player1Symbol) return chalk.red(symbol);
-                    if(symbol === player2Symbol) return chalk.green(symbol);
+                    if(symbol === player1Symbol) return P1({x,y})(symbol);
+                    if(symbol === player2Symbol) return P2({x,y})(symbol);
                     return symbol;
                 })
-                return (index + 1) + ' ' + coloredRow.join('|')
+                return (y + 1) + ' ' + coloredRow.join('|')
             }).join('\n  -+-+- \n') + '\n\n')
+    }
+
+    function P1(coordinates){
+        if(!winner) return chalk.red;
+        if(includesCoordinates()){
+            return chalk.red.bgWhite
+        } else {
+            return chalk.red
+        }
+
+        function includesCoordinates(){
+            return winner.find((coord) =>{
+                return coord.x === coordinates.x &&
+                    coord.y === coordinates.y
+            })
+        }
+    }
+
+    function P2(coordinates){
+        if(!winner) return chalk.green;
+        if(includesCoordinates()){
+            return chalk.green.bgWhite
+        } else {
+            return chalk.green
+        }
+
+        function includesCoordinates(){
+            return winner.find((coord) =>{
+                return coord.x === coordinates.x &&
+                    coord.y === coordinates.y
+            })
+        }
     }
 
     function playMove(){
