@@ -6,6 +6,8 @@ let typeOfPlayers = '';
 let humanGoesFirst = '';
 let player1Symbol = '';
 let player2Symbol = '';
+let player1;
+let player2;
 
 function startGame() {
     let gameType = [{
@@ -89,9 +91,21 @@ function chooseSymbols() {
     }
 
     inquirer.prompt(questions).then((answers) => {
-        player1Symbol = answers.player1Symbol;
-        player2Symbol = answers.player2Symbol;
+        setSymbols()
+        createPlayerControllers()
         play();
+
+        function setSymbols() {
+            player1Symbol = answers.player1Symbol;
+            player2Symbol = answers.player2Symbol;
+        }
+
+        function createPlayerControllers() {
+            let controllers =
+                game.startTicTacToeGame(player1Symbol, player2Symbol)
+            player1 = controllers.player1
+            player2 = controllers.player2
+        }
     })
 
     function onlyOneCharacter(input) {
@@ -106,11 +120,7 @@ function chooseSymbols() {
 
 function play() {
     //play tic tac toe game
-    let grid = [
-        ['X',' ',' '],
-        [' ','O',' '],
-        ['X',' ','O']
-    ]
+    let grid = player1.getCurrentGameState()
 
     console.log(render(grid));
 
@@ -118,8 +128,9 @@ function play() {
         return ('  A B C \n' + 
             grid.map((row, index) => {
                 let coloredRow = row.map((symbol) => {
-                    if(symbol === 'X') return chalk.red(symbol);
-                    if(symbol === 'O') return chalk.green(symbol);
+                    if(!symbol) return ' '
+                    if(symbol === player1Symbol) return chalk.red(symbol);
+                    if(symbol === player2Symbol) return chalk.green(symbol);
                     return symbol;
                 })
                 return (index + 1) + ' ' + coloredRow.join('|')
