@@ -269,14 +269,6 @@ function play() {
         return yConversion[y] + xConversion[x]
     }
 
-    function switchPlayers() {
-        if(currentPlayer === player1){
-            currentPlayer = player2;
-        } else {
-            currentPlayer = player1;
-        }
-    }
-
     function getWinningPlayer() {
         let {x, y} = winner[0]
         return gameState[y][x]
@@ -420,6 +412,12 @@ function hasWinner() {
     }
 }
 
-
+function switchPlayers() {
+    if(currentPlayer === player1){
+        currentPlayer = player2;
+    } else {
+        currentPlayer = player1;
+    }
+}
 
 startGame();
