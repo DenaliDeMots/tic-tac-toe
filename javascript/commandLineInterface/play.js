@@ -125,8 +125,10 @@ function chooseSymbols() {
 function play() {
     //play tic tac toe game
     let grid = player1.getCurrentGameState()
-
+    let winner = hasWinner()
+    let winningPlayer = winner ? getWinningPlayer() : false
     console.log(render(grid));
+    if(winner) gameOver(winningPlayer)
 
     function render(grid) {
         return ('  A B C \n' + 
@@ -220,6 +222,66 @@ function play() {
             currentPlayer = player1;
         }
     }
+
+    function hasWinner() {
+        if(!Array.isArray(gameState)) return false;
+        return winningLocations();
+
+        function winningLocations() {
+            let coordinates = [];
+            getHorizintalLocations();
+            getVerticalLocations();
+            getDiagonalLocations();
+            return coordinates;
+
+            function getHorizintalLocations(){
+                gameState.map((winObject) => {
+                    if(winObject.matchType === 'horizontal match'){
+                        coordinates = coordinates.concat([
+                            {x: 0,y: winObject.rowIndex},
+                            {x: 1,y: winObject.rowIndex},
+                            {x: 2,y: winObject.rowIndex}
+                        ])
+                    }
+                })
+            }
+
+            function getVerticalLocations(){
+                gameState.map((winObject) => {
+                    if(winObject.matchType === 'vertical match'){
+                        coordinates = coordinates.concat([
+                            {x: winObject.columnIndex, y: 0},
+                            {x: winObject.columnIndex, y: 1},
+                            {x: winObject.columnIndex, y: 2}
+                        ])
+                    }
+                })
+            }
+
+            function getDiagonalLocations() {
+                gameState.map((winObject) => {
+                    if(winObject.matchType === 'diagonal match'){
+                        if(winObject.startCorner === 'top left') coordinates = coordinates.concat([
+                            {x:0, y:0}, {x:1, y:1}, {x:2, y:2}
+                        ])
+                        if(winObject.startCorner === 'bottom left') coordinates = coordinates.concat([
+                            {x:0, y:2}, {x:1, y:1}, {x:2, y:0}
+                        ])
+                    }
+                })
+            }
+        }
+    }
+
+    function getWinningPlayer() {
+        let {x, y} = winner[0]
+        return gameState[y][x]
+    }
+}
+
+function gameOver(winningPlayer){
+    player = winningPlayer === player1Symbol ? 'Player 1' : 'Player 2'
+    console.log(player + ' has won the game!')
 }
 
 startGame();
