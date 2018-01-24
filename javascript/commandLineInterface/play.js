@@ -3,10 +3,10 @@ let chalk = require('chalk');
 let game = require('../ticTacToe');
 let ai = require('../ai/ticTacToe_HardAi')
 
-let typeOfPlayers = '';
-let humanGoesFirst = '';
-let player1Symbol = '';
-let player2Symbol = '';
+let typeOfPlayers;
+let humanGoesFirst;
+let player1Symbol;
+let player2Symbol;
 let player1;
 let player2;
 let currentPlayer;
@@ -117,6 +117,7 @@ function chooseSymbols() {
     })
 
     function onlyOneCharacter(input) {
+        input = input.trim();
         if(input === player1Symbol){
             return 'Character already chosen, please choose another';
         } else if (input.length === 1){
