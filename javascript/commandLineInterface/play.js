@@ -30,14 +30,23 @@ let whoPlaysFirst = [{
 }]
 
 
-
-inquirer.prompt(gameType).then((answers) => {
-    if(answers['game type'] === 'human vs computer'){
-        inquirer.prompt(whoPlaysFirst).then((answers) => {
+function startGame() {
+    inquirer.prompt(gameType).then((answers) => {
+        if(answers['game type'] === 'human vs computer'){
+            askWhoPlaysFirst()
+        } else {
             play();
-        })
-    }
-})
+        }
+    })
+}
+
+function askWhoPlaysFirst() {
+    inquirer.prompt(whoPlaysFirst).then((answers) => {
+        play();
+    })
+}
+
+
 
 function play() {
     //play tic tac toe game
@@ -47,7 +56,8 @@ function play() {
         ['X',' ','O']
     ]
 
-    console.log(render(grid));
+    let renderedGrid = render(grid)
+    console.log(renderedGrid);
 
     function render(grid) {
         return ('  A B C \n' + 
@@ -65,3 +75,5 @@ function play() {
         play();
     })
 }
+
+startGame();
