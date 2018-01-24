@@ -1,5 +1,3 @@
-import { normalize } from 'path';
-
 let inquirer = require('inquirer');
 let chalk = require('chalk');
 let game = require('../ticTacToe');
@@ -10,6 +8,8 @@ let player1Symbol = '';
 let player2Symbol = '';
 let player1;
 let player2;
+let currentPlayer;
+let gameState;
 
 function startGame() {
     let gameType = [{
@@ -104,6 +104,7 @@ function chooseSymbols() {
                     game.startTicTacToeGame(player1Symbol, player2Symbol)
                 player1 = controllers.player1
                 player2 = controllers.player2
+                currentPlayer = player1;
             }
         })
     })
@@ -148,6 +149,8 @@ function play() {
 
     inquirer.prompt(playMove).then((answers) => {
         let move = toMoveObject(normalizeMove(answers.move));
+        gameState = currentPlayer.playMove(move)
+        switchPlayers()
         play();
     })
 
@@ -198,6 +201,14 @@ function play() {
         return {
             x: xConversion[move.slice(1,2)],
             y: yConversion[move.slice(0,1)]
+        }
+    }
+
+    function switchPlayers() {
+        if(currentPlayer === player1){
+            currentPlayer = player2;
+        } else {
+            currentPlayer = player1;
         }
     }
 }
