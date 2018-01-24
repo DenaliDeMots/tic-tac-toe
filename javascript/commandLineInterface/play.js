@@ -2,6 +2,11 @@ let inquirer = require('inquirer');
 let chalk = require('chalk');
 let game = require('../ticTacToe');
 
+let typeOfPlayers = '';
+let humanGoesFirst = '';
+let player1Symbol = '';
+let player2Symbol = '';
+
 function startGame() {
     let gameType = [{
         type: 'list',
@@ -14,10 +19,11 @@ function startGame() {
         ]
     }]
     inquirer.prompt(gameType).then((answers) => {
+        typeOfPlayers = answers['game type']
         if(answers['game type'] === 'human vs computer'){
             askWhoPlaysFirst()
         } else {
-            play();
+            chooseSymbols();
         }
     })
 }
@@ -33,11 +39,70 @@ function askWhoPlaysFirst() {
         ]
     }]
     inquirer.prompt(whoPlaysFirst).then((answers) => {
-        play();
+        humanGoesFirst = answers['who goes first'];
+        chooseSymbols();
     })
 }
 
+function chooseSymbols() {
+    let questions;
+    if(typeOfPlayers === 'human vs human'){
+        questions = [{
+            type: 'input',
+            name: 'player1Symbol',
+            message: 'Player 1, please type a character to be your symbol',
+            validate: onlyOneCharacter
+        },{
+            type: 'input',
+            name: 'player2Symbol',
+            message: 'Player 2, please type a character to be your symbol',
+            validate: onlyOneCharacter
+        }]
+    } else if (typeOfPlayers === 'human vs computer'){
+        questions = [{
+            type: 'input',
+            name: 'player1Symbol',
+            message: (humanGoesFirst === 'yes' ? 
+                'Please type a character to be your symbol'
+                : "Please type a character to be the computer's symbol"),
+            validate: onlyOneCharacter
+        },{
+            type: 'input',
+            name: 'player2Symbol',
+            message: (humanGoesFirst === 'no' ? 
+            'Please type a character to be your symbol'
+            : "Please type a character to be the computer's symbol"),
+            validate: onlyOneCharacter
+        }]
+    } else {
+        questions = [{
+            type: 'input',
+            name: 'player1Symbol',
+            message: "Please type a character to be the first computer's symbol",
+            validate: onlyOneCharacter
+        },{
+            type: 'input',
+            name: 'player2Symbol',
+            message: "Please type a character to be the second computer's symbol",
+            validate: onlyOneCharacter
+        }]
+    }
 
+    inquirer.prompt(questions).then((answers) => {
+        player1Symbol = answers.player1Symbol;
+        player2Symbol = answers.player2Symbol;
+        play();
+    })
+
+    function onlyOneCharacter(input) {
+        if(input.length === 1){
+            return true;
+        } else if (input.length === 0){
+            return 'Please enter a character'
+        }
+        return 'Please only enter one character'
+    }
+}
 
 function play() {
     //play tic tac toe game
