@@ -2,10 +2,11 @@ let inquirer = require('inquirer');
 let chalk = require('chalk');
 let game = require('../ticTacToe');
 
+
 let gameType = [{
     type: 'list',
     name: 'game type',
-    message: menu('What type of game would you like to play?'),
+    message: 'What type of game would you like to play?',
     choices: [
         'human vs human',
         'human vs computer',
@@ -16,12 +17,13 @@ let gameType = [{
 let whoPlaysFirst = [{
     type: 'list',
     name: 'who goes first',
-    message: menu('Would you like to go first?'),
+    message: 'Would you like to go first?',
     choices: [
         'yes',
         'no'
     ]
 }]
+
 
 
 function startGame() {
