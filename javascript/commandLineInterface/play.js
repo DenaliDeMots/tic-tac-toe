@@ -431,6 +431,8 @@ function computerFight() {
         console.log(render(gameState))
         if(victory()){
             gameOver(playerSymbol)
+        } else if (stalemate()){
+            gameOver(false)
         } else {
             swap()
             setTimeout(fight, 1000)
@@ -454,7 +456,11 @@ function computerFight() {
         }
         
         function victory() {
-            return Array.isArray(moveResult) || moveResult === 'stalemate'
+            return Array.isArray(moveResult)
+        }
+
+        function stalemate() {
+            return moveResult === 'stalemate'
         }
     }
 
