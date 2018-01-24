@@ -277,8 +277,7 @@ function play() {
 
 function gameOver(winningPlayer){
     if(winningPlayer){
-        let player = winningPlayer === player1Symbol ? 'Player 1' : 'Player 2'
-        console.log(player + ' has won the game!')
+        console.log(winningPlayer + ' has won the game!')
         playAgain()
     } else {
         console.log('The game has ended in stalemate')
