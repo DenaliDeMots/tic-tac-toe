@@ -2,31 +2,17 @@ let inquirer = require('inquirer');
 let chalk = require('chalk');
 let game = require('../ticTacToe');
 
-
-let gameType = [{
-    type: 'list',
-    name: 'game type',
-    message: 'What type of game would you like to play?',
-    choices: [
-        'human vs human',
-        'human vs computer',
-        'computer vs computer'
-    ]
-}]
-
-let whoPlaysFirst = [{
-    type: 'list',
-    name: 'who goes first',
-    message: 'Would you like to go first?',
-    choices: [
-        'yes',
-        'no'
-    ]
-}]
-
-
-
 function startGame() {
+    let gameType = [{
+        type: 'list',
+        name: 'game type',
+        message: 'What type of game would you like to play?',
+        choices: [
+            'human vs human',
+            'human vs computer',
+            'computer vs computer'
+        ]
+    }]
     inquirer.prompt(gameType).then((answers) => {
         if(answers['game type'] === 'human vs computer'){
             askWhoPlaysFirst()
@@ -37,6 +23,15 @@ function startGame() {
 }
 
 function askWhoPlaysFirst() {
+    let whoPlaysFirst = [{
+        type: 'list',
+        name: 'who goes first',
+        message: 'Would you like to go first?',
+        choices: [
+            'yes',
+            'no'
+        ]
+    }]
     inquirer.prompt(whoPlaysFirst).then((answers) => {
         play();
     })
