@@ -10,7 +10,7 @@ let player2Symbol = '';
 let player1;
 let player2;
 let currentPlayer;
-let gameState;
+let moveResult;
 let winner =  false
 let playedMoves = []
 
@@ -130,15 +130,15 @@ function chooseSymbols() {
 
 function play() {
     //play tic tac toe game
-    let grid = player1.getCurrentGameState()
+    let gameState = player1.getCurrentGameState()
     winner = hasWinner()
     let winningPlayer = winner ? getWinningPlayer() : false
-    console.log(render(grid));
-    if(winner || gameState === 'stalemate'){
+    console.log(render(gameState));
+    if(winner || moveResult === 'stalemate'){
         gameOver(winningPlayer)
     } else {
         computerMove()
-        if(winner || gameState === 'stalemate'){
+        if(winner || moveResult === 'stalemate'){
             gameOver(winningPlayer)
         } else {
             playNextMove()
@@ -157,18 +157,18 @@ function play() {
             let move = ai.chooseMove(computer.getCurrentGameState(), computerSymbol, humanSymbol);
             playMove();
             checkForWin()
-            console.log(render(grid));
+            console.log(render(gameState));
             switchPlayers()
 
             function playMove() {
-                gameState = computer.playMove(move);
+                moveResult = computer.playMove(move);
                 move = fromMoveObject(move);
                 recordAndConvert(move);
                 console.log(M(computer)('Computer plays ' + move))
             }
 
             function checkForWin() {
-                grid = computer.getCurrentGameState()
+                gameState = computer.getCurrentGameState()
                 winner = hasWinner()
                 winningPlayer = winner ? getWinningPlayer() : false
             }
@@ -178,7 +178,7 @@ function play() {
     function playNextMove(){
         inquirer.prompt(playMove()).then((answers) => {
             let move = recordAndConvert(answers.move);
-            gameState = currentPlayer.playMove(move);
+            moveResult = currentPlayer.playMove(move);
             switchPlayers();
             play();
         })
@@ -279,7 +279,7 @@ function play() {
 
     function getWinningPlayer() {
         let {x, y} = winner[0]
-        return grid[y][x]
+        return gameState[y][x]
     }
 }
 
@@ -319,7 +319,7 @@ function playAgain() {
         player1 = undefined;
         player2 = undefined;
         currentPlayer = undefined;
-        gameState = undefined;
+        moveResult = undefined;
         winner =  false;
         playedMoves = []
     }
@@ -371,7 +371,7 @@ function P2(coordinates){
 }
 
 function hasWinner() {
-    if(!Array.isArray(gameState)) return false;
+    if(!Array.isArray(moveResult)) return false;
     return winningLocations();
 
     function winningLocations() {
@@ -382,7 +382,7 @@ function hasWinner() {
         return coordinates;
 
         function getHorizintalLocations(){
-            gameState.map((winObject) => {
+            moveResult.map((winObject) => {
                 if(winObject.matchType === 'horizontal match'){
                     coordinates = coordinates.concat([
                         {x: 0,y: winObject.rowIndex},
@@ -394,7 +394,7 @@ function hasWinner() {
         }
 
         function getVerticalLocations(){
-            gameState.map((winObject) => {
+            moveResult.map((winObject) => {
                 if(winObject.matchType === 'vertical match'){
                     coordinates = coordinates.concat([
                         {x: winObject.columnIndex, y: 0},
@@ -406,7 +406,7 @@ function hasWinner() {
         }
 
         function getDiagonalLocations() {
-            gameState.map((winObject) => {
+            moveResult.map((winObject) => {
                 if(winObject.matchType === 'diagonal match'){
                     if(winObject.startCorner === 'top left') coordinates = coordinates.concat([
                         {x:0, y:0}, {x:1, y:1}, {x:2, y:2}
@@ -420,8 +420,6 @@ function hasWinner() {
     }
 }
 
-function computerFight() {
 
-}
 
 startGame();
