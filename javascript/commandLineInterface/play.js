@@ -128,7 +128,21 @@ function play() {
     let winner = hasWinner()
     let winningPlayer = winner ? getWinningPlayer() : false
     console.log(render(grid));
-    if(winner) gameOver(winningPlayer)
+    if(winner){
+        gameOver(winningPlayer)
+    } else {
+        playNextMove()
+    }
+    
+    // helper functions
+    function playNextMove(){
+        inquirer.prompt(playMove()).then((answers) => {
+            let move = recordAndConvert(answers.move);
+            gameState = currentPlayer.playMove(move);
+            switchPlayers();
+            play();
+        })
+    }
 
     function render(grid) {
         return ('  A B C \n' + 
@@ -142,23 +156,17 @@ function play() {
                 return (index + 1) + ' ' + coloredRow.join('|')
             }).join('\n  -+-+- \n') + '\n\n')
     }
-    
-    let playMove = [{
-        type: 'input',
-        name: 'move',
-        message: ((currentPlayer === player1 ? 'Player 1' : 'Player 2')
-            + ' please choose a row and column'),
-        validate: validateMove
-    }]
 
-    inquirer.prompt(playMove).then((answers) => {
-        let move = recordAndConvert(answers.move);
-        gameState = currentPlayer.playMove(move);
-        switchPlayers();
-        play();
-    })
+    function playMove(){
+        return [{
+            type: 'input',
+            name: 'move',
+            message: ((currentPlayer === player1 ? 'Player 1' : 'Player 2')
+                + ' please choose a row and column'),
+            validate: validateMove
+        }]
+    }
 
-    // helper functions
     function validateMove(move){
         let errorMessage = 'Invalid move. Please place a move like 1A or b3'
         if(move.length !== 2) return errorMessage;
