@@ -1,5 +1,16 @@
 import INITIAL_STATE from './initialState';
+import initialState from './initialState';
 
-export default function reducer (previousState = INITIAL_STATE, action) {
-
+function reducer (previousState = INITIAL_STATE, action) {
+    switch (action.type) {
+        case 'UPDATE_GAMEBOARD':
+            return {
+                ...initialState,
+                gameBoard: action.gameBoard
+            }
+        default:
+            return previousState;
+    }
 }
+
+export default reducer;
