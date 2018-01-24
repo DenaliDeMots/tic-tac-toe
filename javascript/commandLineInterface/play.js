@@ -291,8 +291,40 @@ function gameOver(winningPlayer){
     if(winningPlayer){
         let player = winningPlayer === player1Symbol ? 'Player 1' : 'Player 2'
         console.log(player + ' has won the game!')
+        playAgain()
     } else {
         console.log('The game has ended in stalemate')
+        playAgain()
+    }
+}
+
+function playAgain() {
+    let shouldPlayAgain = [{
+        type: 'list',
+        name: 'playAgain',
+        message: 'Would you like to play again?',
+        choices: [
+            'yes',
+            'no'
+        ]
+    }]
+    inquirer.prompt(shouldPlayAgain).then((answers) => {
+        if(answers.playAgain === 'yes'){
+            resetState()
+            startGame()
+        }
+    })
+
+    function resetState() {
+        typeOfPlayers = '';
+        humanGoesFirst = '';
+        player1Symbol = '';
+        player2Symbol = '';
+        player1 = undefined;
+        player2 = undefined;
+        currentPlayer = undefined;
+        gameState = undefined;
+        playedMoves = []
     }
 }
 
