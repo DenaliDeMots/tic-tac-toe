@@ -1,6 +1,7 @@
 let inquirer = require('inquirer');
 let chalk = require('chalk');
 let game = require('../ticTacToe');
+let ai = require('../ai/ticTacToe_HardAi')
 
 let typeOfPlayers = '';
 let humanGoesFirst = '';
@@ -131,10 +132,47 @@ function play() {
     if(winner || gameState === 'stalemate'){
         gameOver(winningPlayer)
     } else {
+        computerMove()
         playNextMove()
     }
 
     // helper functions
+    function computerMove() {
+        if(typeOfPlayers !== 'human vs computer') return;
+        let [computer, computerSymbol, humanSymbol] = humanGoesFirst === 'yes' ?
+            [player2, player2Symbol, player1Symbol] : 
+            [player1, player1Symbol, player2Symbol];
+        if(currentPlayer === computer) playComputerMove()
+
+        function playComputerMove() {
+            let move = ai.chooseMove(computer.getCurrentGameState(), computerSymbol, humanSymbol);
+            playMove();
+            checkForWin()
+            console.log(render(grid));
+            next()
+
+            function playMove() {
+                gameState = computer.playMove(move);
+                move = fromMoveObject(move);
+                recordAndConvert(move);
+                console.log('Computer plays ', move)
+            }
+
+            function checkForWin() {
+                grid = computer.getCurrentGameState()
+                winner = hasWinner()
+                winningPlayer = winner ? getWinningPlayer() : false
+            }
+
+            function next () {
+                switchPlayers()
+                if(winner || gameState === 'stalemate'){
+                    gameOver(winningPlayer)
+                }
+            }
+        }
+    }
+
     function playNextMove(){
         inquirer.prompt(playMove()).then((answers) => {
             let move = recordAndConvert(answers.move);
@@ -253,6 +291,20 @@ function play() {
             x: xConversion[move.slice(1,2)],
             y: yConversion[move.slice(0,1)]
         }
+    }
+
+    function fromMoveObject({x, y}){
+        let xConversion = {
+            0: 'A',
+            1: 'B',
+            2: 'C'
+        }
+        let yConversion = {
+            0: 1,
+            1: 2,
+            2: 3
+        }
+        return yConversion[y] + xConversion[x]
     }
 
     function switchPlayers() {
