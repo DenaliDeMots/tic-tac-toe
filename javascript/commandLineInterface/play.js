@@ -155,7 +155,7 @@ function play() {
                 gameState = computer.playMove(move);
                 move = fromMoveObject(move);
                 recordAndConvert(move);
-                console.log('Computer plays ', move)
+                console.log(M(computer)('Computer plays ' + move))
             }
 
             function checkForWin() {
@@ -227,11 +227,16 @@ function play() {
         }
     }
 
+    function M(player){
+        if(player === player1) return chalk.red;
+        return chalk.green
+    }
+
     function playMove(){
         return [{
             type: 'input',
             name: 'move',
-            message: ((currentPlayer === player1 ? 'Player 1' : 'Player 2')
+            message: M(currentPlayer)((currentPlayer === player1 ? 'Player 1' : 'Player 2')
                 + ' please choose a row and column'),
             validate: validateMove
         }]
