@@ -140,8 +140,41 @@ function play() {
     let playMove = [{
         type: 'input',
         name: 'move',
-        message: 'please choose a row and column'
+        message: 'please choose a row and column',
+        validate: validateMove
     }]
+
+    function validateMove(move){
+        let errorMessage = 'Invalid move. Please place a move like 1A or b3'
+        if(move.length !== 2) return errorMessage;
+        normalizeMove()
+        if(!moveIsValidCoordinate()) return errorMessage;
+        return true;
+
+        function moveIsValidCoordinate(){
+            let validMoves = [
+                '1a', '1b', '1c',
+                '2a', '2b', '2c',
+                '3a', '3b', '3c'
+            ]
+            return validMoves.includes(move)
+        }
+
+        function normalizeMove() {
+            move = move.toLowerCase()
+            if(!firstCharacterIsADigit(move)) move = reverseString(move);
+
+            function firstCharacterIsADigit(string) {
+                let code = string.charCodeAt(0);
+                return code >= 48 && code <= 57
+            }
+
+            function reverseString(string){
+                return string.split('').reverse().join('')
+            }
+        }
+    }
+
     inquirer.prompt(playMove).then((answers) => {
         play();
     })
