@@ -90,31 +90,31 @@ function chooseSymbols() {
         }]
     }
 
-    inquirer.prompt(questions).then((answers) => {
-        setSymbols()
-        createPlayerControllers()
-        play();
-
-        function setSymbols() {
-            player1Symbol = answers.player1Symbol;
+    inquirer.prompt(questions[0]).then((answers) => {
+        player1Symbol = answers.player1Symbol;
+        inquirer.prompt(questions[1]).then((answers) => {
             player2Symbol = answers.player2Symbol;
-        }
+            createPlayerControllers()
+            play();
 
-        function createPlayerControllers() {
-            let controllers =
-                game.startTicTacToeGame(player1Symbol, player2Symbol)
-            player1 = controllers.player1
-            player2 = controllers.player2
-        }
+            function createPlayerControllers() {
+                let controllers =
+                    game.startTicTacToeGame(player1Symbol, player2Symbol)
+                player1 = controllers.player1
+                player2 = controllers.player2
+            }
+        })
     })
 
     function onlyOneCharacter(input) {
-        if(input.length === 1){
+        if(input === player1Symbol){
+            return 'Character already chosen, please choose another';
+        } else if (input.length === 1){
             return true;
         } else if (input.length === 0){
-            return 'Please enter a character'
+            return 'Please enter a character';
         }
-        return 'Please only enter one character'
+        return 'Please only enter one character';
     }
 }
 
