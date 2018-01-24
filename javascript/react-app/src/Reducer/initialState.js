@@ -5,7 +5,8 @@ const gameBoard = [
 ]
 
 const INITIAL_STATE = {
-    gameBoard
+    gameBoard,
+    player: 'player1'
 }
 
 export default INITIAL_STATE;
