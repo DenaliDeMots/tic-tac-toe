@@ -6,6 +6,8 @@
     "test": "jest"
   },
   "dependencies": {
-    "deep-freeze": "^0.0.1"
+    "chalk": "^2.3.0",
+    "deep-freeze": "^0.0.1",
+    "inquirer": "^5.0.1"
   }
 }
