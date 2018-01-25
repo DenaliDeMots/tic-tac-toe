@@ -7,6 +7,9 @@
   "scripts": {
     "test": "jest"
   },
+  "jest": {
+    "testPathIgnorePatterns": ["<rootDir>/react-app/"]
+  },
   "dependencies": {
     "chalk": "^2.3.0",
     "deep-freeze": "^0.0.1",
