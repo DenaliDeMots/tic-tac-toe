@@ -1,4 +1,6 @@
 {
+  "name": "tic-tac-toe",
+  "version": "0.1.0",
   "devDependencies": {
     "jest": "^22.1.1"
   },
