@@ -1,4 +1,4 @@
-deepFreeze = require('deep-freeze');
+const deepFreeze = require('deep-freeze');
 
 //messages emmited by grid objects
 const coordinatesAlreadyUsed = 'coordinates already used';
@@ -105,7 +105,7 @@ function makeGrid (xSize, ySize) {
         },
 
         getVerticalMatchingValues () {
-            matches = [];
+            let matches = [];
             for(let i = 0; i < grid[0].length; i++) {
                 let startElement = grid[0][i];
                 let match = !!startElement; //falsey values don't count as matches
