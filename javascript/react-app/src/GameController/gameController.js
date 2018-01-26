@@ -2,7 +2,8 @@ import ticTacToe from '../../../ticTacToe';
 import ai from '../../../ai/ticTacToe_HardAi';
 import {
     startGame,
-    gameOver
+    gameOver,
+    changePlayer
 } from '../Actions/actions';
 import store from './store';
 import INITIAL_STATE from '../Reducer/initialState';
@@ -17,6 +18,8 @@ function makeGameController ({player1, player2}) {
             store.dispatch(gameOver);
         } else if (moveResult === 'stalemate'){
             store.dispatch(gameOver);
+        } else if (moveResult.slice(8) === 'placed token'){
+            store.dispatch(changePlayer)
         }
     }
 
