@@ -12,8 +12,10 @@ const style = {
 }
 
 const App = () => (
-  <div style={style}>
-    <GameBoardContainer gridArea={'gameBoard'}/>
+  <div style={{backgroundColor: '#8DB2F3'}}>
+    <div style={style}>
+      <GameBoardContainer gridArea={'gameBoard'}/>
+    </div>
   </div>
 )
 
