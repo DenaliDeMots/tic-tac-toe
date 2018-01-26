@@ -1,5 +1,5 @@
 import React from 'react';
-import GameBoard from './GameBoard';
+import GameBoardContainer from './GameBoardContainer';
 
 const style = {
   display: 'grid',
@@ -13,7 +13,7 @@ const style = {
 
 const App = () => (
   <div style={style}>
-    <GameBoard gridArea={'gameBoard'}/>
+    <GameBoardContainer gridArea={'gameBoard'}/>
   </div>
 )
 
