@@ -12,7 +12,10 @@ const style = {
     "C10 C11 C12"
     "C20 C21 C22"`,
     gridTemplateColumns: "1fr 1fr 1fr",
-    gridTemplateRows: "1fr 1fr 1fr"
+    gridTemplateRows: "1fr 1fr 1fr",
+    gridColumnGap: '3vmin',
+    gridRowGap: '3vmin',
+    backgroundColor: 'black'
 }
 
 const GameBoard = ({gridArea, cells, board}) => (
