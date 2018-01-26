@@ -8,7 +8,8 @@ const style = {
     ". gameBoard ."
     ". . ."`,
   gridTemplateColumns: '1fr 90vmin 1fr',
-  gridTemplateRows: '1fr 90vmin 1fr'
+  gridTemplateRows: '1fr 90vmin 1fr',
+  height: '100%'
 }
 
 const backgroundStyle = {
