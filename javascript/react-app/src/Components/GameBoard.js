@@ -16,7 +16,7 @@ const style = {
 }
 
 const GameBoard = ({gridArea, cells, board}) => (
-    <div gridArea={gridArea} style={style}>
+    <div style={{...style, gridArea}}>
         {drawCells(board)}
     </div>
 )

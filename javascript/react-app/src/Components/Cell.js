@@ -1,7 +1,7 @@
 import React from 'react';
 
-const Cell = () => (
-    <div>
+const Cell = ({gridArea}) => (
+    <div style={{gridArea}}>
 
     </div>
 )
