@@ -11,8 +11,13 @@ const style = {
   gridTemplateRows: '1fr 90vmin 1fr'
 }
 
+const backgroundStyle = {
+  backgroundColor: '#8DB2F3',
+  height: '100%'
+}
+
 const App = () => (
-  <div style={{backgroundColor: '#8DB2F3'}}>
+  <div style={backgroundStyle}>
     <div style={style}>
       <GameBoardContainer gridArea={'gameBoard'}/>
     </div>
