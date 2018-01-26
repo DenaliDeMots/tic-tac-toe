@@ -358,12 +358,12 @@ test('ai creates double impending moves when possible', () => {
 })
 
 test('the ai blocks double impending losses', () => {
-    grid = [
+    let grid = [
         [y,x,u],
         [u,x,y],
         [u,y,u]
     ]
-    move = ai.chooseMove(grid, x, y)
+    let move = ai.chooseMove(grid, x, y)
     expect(move).toEqual({x: 0, y: 2})
 })
 
