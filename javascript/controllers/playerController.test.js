@@ -88,7 +88,7 @@ test('turn notifier registers a callback that gets fired on turn change', () => 
         player: sally
     });
     //turn notifications can be added after the game has started
-    let sallTurnNotification = false;
+    let sallyTurnNotifications = false;
     sallyController.turnNotifier((turnChangeNotification) => {
         sallyTurnNotifications = turnChangeNotification
     })
