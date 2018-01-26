@@ -2,7 +2,9 @@ import reducer from './reducer';
 import INITIAL_STATE from './initialState';
 import {
     updateGameBoardAction,
-    changePlayer
+    changePlayer,
+    startGame,
+    gameOver
 } from '../Actions/actions'
 import initialState from './initialState';
 
@@ -23,4 +25,20 @@ test('the change player action toggles between player 1 and 2', () => {
     nextState = reducer(nextState, changePlayer);
     expect(nextState.player).toBe('player1');
     expect(nextState).toEqual(INITIAL_STATE)
+})
+
+test('sessionState toggles between startMenu, gameInProgress, and gameOver', () => {
+    expect(INITIAL_STATE.sessionState).toBe('startMenu');
+    let nextState = reducer(INITIAL_STATE, startGame);
+    expect(nextState.sessionState).toBe('gameInProgress');
+    nextState = reducer(nextState, gameOver);
+    expect(nextState.sessionState).toBe('gameOver');
+    nextState = reducer(nextState, startGame);
+    expect(nextState.sessionState).toBe('startMenu');
+    nextState = reducer(nextState, startGame);
+    expect(nextState.sessionState).toBe('gameInProgress');
+    nextState = reducer(nextState, startGame);
+    expect(nextState.sessionState).toBe('startMenu');
+    nextState = reducer(nextState, gameOver);
+    expect(nextState.sessionState).toBe('gameOver');
 })
