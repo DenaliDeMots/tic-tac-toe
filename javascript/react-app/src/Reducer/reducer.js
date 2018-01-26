@@ -2,8 +2,9 @@ import INITIAL_STATE from './initialState';
 import initialState from './initialState';
 import startGame from './SubReducers/startGame'
 import { gameOver } from '../Actions/actions';
+import deepFreeze from 'deep-freeze';
 
-function reducer (previousState = INITIAL_STATE, action) {
+function freezer (previousState = INITIAL_STATE, action) {
     switch (action.type) {
         case 'UPDATE_GAMEBOARD':
             return {
@@ -32,6 +33,11 @@ function reducer (previousState = INITIAL_STATE, action) {
         default:
             return previousState;
     }
+}
+
+function reducer(previousState, action){
+    const nextState = freezer(previousState, action);
+    return deepFreeze(nextState);
 }
 
 export default reducer;
