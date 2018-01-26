@@ -8,9 +8,9 @@ import Cell from './Cell';
 const style = {
     display: 'grid',
     gridTemplateAreas: `
-    "00" "01" "02"
-    "10" "11" "12"
-    "20" "21" "22"`,
+    "C00 C01 C02"
+    "C10 C11 C12"
+    "C20 C21 C22"`,
     gridTemplateColumns: "1fr 1fr 1fr",
     gridTemplateRows: "1fr 1fr 1fr"
 }
@@ -25,7 +25,7 @@ const drawCells = (board) => {
     const cells = []
     for(let i = 0; i < board.length; i++){
         for(let j = 0; j < board[0].length; j++){
-            let key = "" + i + j;
+            let key = "C" + i + j;
             cells.push(<Cell gridArea={key} key={key} />)
         }
     }
