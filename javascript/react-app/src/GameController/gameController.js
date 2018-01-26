@@ -6,7 +6,7 @@ import INITIAL_STATE from '../Reducer/initialState';
 
 function makeGameController ({player1, player2}) {
     let gameType;
-    let currentPlaher = INITIAL_STATE.player;
+    let currentPlayer = INITIAL_STATE.player;
 
     const publicMethods = {
         startSinglePlayerGame(){
@@ -17,6 +17,14 @@ function makeGameController ({player1, player2}) {
         start2PlayerGame() {
             gameType = '2PlayerGame'
             store.dispatch(startGame);
+        },
+
+        playMove(move){
+            if(currentPlayer === 'player1'){
+                player1.playMove(move)
+            } else if (currentPlayer === 'player2') {
+                player2.playMove(move)
+            }
         }
     }
     return publicMethods;
