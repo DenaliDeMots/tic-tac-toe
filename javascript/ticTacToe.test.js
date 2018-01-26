@@ -94,7 +94,7 @@ test('game ends on win', () => {
         x: 2,
         y: 0
     })
-    gameState = player2.getCurrentGameState();
+    let gameState = player2.getCurrentGameState();
     let expectedGameState = [
         [billy, billy, billy],
         [sally, undefined, undefined],
