@@ -15,8 +15,8 @@ function freezer (previousState = INITIAL_STATE, action) {
         case 'CHANGE_PLAYER':
             return {
                 ...previousState,
-                player: previousState.player === 'player1' ?
-                    'player2' : 'player1'
+                player: previousState.player === 'player 1' ?
+                    'player 2' : 'player 1'
             }
         
         case 'START_GAME':
