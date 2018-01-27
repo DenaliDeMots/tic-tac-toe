@@ -21,6 +21,11 @@ function makeGameController ({player1, player2}) {
         store.dispatch(setPlayer(player.currentTurn))
     }
 
+    function startNewGame() {
+        store.dispatch(startGame);
+        store.dispatch(setPlayer('player 1'))
+    }
+
     function checkForGameOver(){
         if(Array.isArray(moveResult)){
             store.dispatch(gameOver);
@@ -42,13 +47,13 @@ function makeGameController ({player1, player2}) {
         startSinglePlayerGame(humanPlayer){
             computerPlayer = humanPlayer === 'player 2' ? player1 : player2;
             gameType = '1PlayerGame';
-            store.dispatch(startGame);
+            startNewGame()
             if(computerPlayer === player1) playAiMove()
         },
 
         start2PlayerGame() {
             gameType = '2PlayerGame'
-            store.dispatch(startGame);
+            startNewGame()
         },
 
         playMove(move){
