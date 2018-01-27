@@ -1,6 +1,6 @@
 
 
-export const updateGameBoardAction = (gameBoard) => ({
+export const updateGameBoard = (gameBoard) => ({
     type: 'UPDATE_GAMEBOARD',
     gameBoard
 })

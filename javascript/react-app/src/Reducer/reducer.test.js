@@ -1,7 +1,7 @@
 import reducer from './reducer';
 import INITIAL_STATE from './initialState';
 import {
-    updateGameBoardAction,
+    updateGameBoard,
     setPlayer,
     startGame,
     gameOver
@@ -14,7 +14,7 @@ test('the update game board action updates the gameboard field in the state', ()
         [0,0,1],
         [0,1,0]
     ]
-    const action = updateGameBoardAction(newGameBoard)
+    const action = updateGameBoard(newGameBoard)
     expect(reducer(undefined, action).gameBoard).toEqual(newGameBoard);
 })
 
