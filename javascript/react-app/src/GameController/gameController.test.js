@@ -2,8 +2,22 @@ import gameController from './gameController';
 import store from './store';
 
 
-test('start single player game begins the game', () =>{
+
+test('single player game defaults to the human as player 1', () => {
     gameController.startSinglePlayerGame();
+    let newState = store.getState();
+    expect(newState.player).toBe('player 1');  
+})
+
+test('setting the human player to player 2 causes the ai to play the first move', () => {
+    gameController.startSinglePlayerGame('player 2');
+    let newState = store.getState();
+    expect(newState.player).toBe('player 2');
+})
+
+
+test('start 2 player game begins the game', () =>{
+    gameController.start2PlayerGame();
     let newState = store.getState();
     expect(newState.player).toBe('player 1');
     gameController.playMove({x: 0, y: 0})
