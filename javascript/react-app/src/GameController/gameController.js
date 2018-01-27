@@ -4,7 +4,8 @@ import {
     startGame,
     gameOver,
     setPlayer,
-    updateGameBoard
+    updateGameBoard,
+    setWinner
 } from '../Actions/actions';
 import store from './store';
 import INITIAL_STATE from '../Reducer/initialState';
@@ -25,7 +26,8 @@ function makeGameController ({player1, player2}) {
     function startNewGame() {
         store.dispatch(startGame);
         store.dispatch(setPlayer('player 1'));
-        updateGameBoardState()
+        store.dispatch(setWinner(false));
+        updateGameBoardState();
     }
 
     function updateGameBoardState() {
@@ -36,8 +38,35 @@ function makeGameController ({player1, player2}) {
     function checkForGameOver(){
         if(Array.isArray(moveResult)){
             store.dispatch(gameOver);
+            let winnner = getWinner()
+            store.dispatch(setWinner(winnner))
         } else if (moveResult === 'stalemate'){
             store.dispatch(gameOver);
+        }
+
+        function getWinner() {
+            let firstMatch = moveResult[0];
+            let board = player1.getCurrentGameState()
+            let winningToken = verticalMatch() || horizontalMatch() || diagonalMatch()
+            return winningToken === 'X' ? 'player 1' : 'player 2'
+
+            function verticalMatch() {
+                if(firstMatch.matchType !== 'vertical match') return false;
+                let columnIndex = firstMatch.columnIndex;
+                return board[0][columnIndex]
+            }
+
+            function horizontalMatch() {
+                if(firstMatch.matchType !== 'horizontal match') return false;
+                let rowIndex = firstMatch.rowIndex;
+                return board[rowIndex][0]
+            }
+
+            function diagonalMatch() {
+                if(firstMatch.matchType !== 'diagonal match') return false;
+                let startCorner = firstMatch.startCorner;
+                return startCorner === 'top left' ? board[0][0] : board[2][0]
+            }
         }
     }
 
@@ -48,6 +77,7 @@ function makeGameController ({player1, player2}) {
         let board = player1.getCurrentGameState()
         let computerMove = ai.chooseMove(board, aiToken, humanToken)
         moveResult = computerPlayer.playMove(computerMove);
+        checkForGameOver()
     }
 
     const publicMethods = {
