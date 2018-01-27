@@ -3,7 +3,8 @@ import ai from '../../../ai/ticTacToe_HardAi';
 import {
     startGame,
     gameOver,
-    setPlayer
+    setPlayer,
+    updateGameBoard
 } from '../Actions/actions';
 import store from './store';
 import INITIAL_STATE from '../Reducer/initialState';
@@ -23,7 +24,13 @@ function makeGameController ({player1, player2}) {
 
     function startNewGame() {
         store.dispatch(startGame);
-        store.dispatch(setPlayer('player 1'))
+        store.dispatch(setPlayer('player 1'));
+        updateGameBoardState()
+    }
+
+    function updateGameBoardState() {
+        let currentGameBoard = player1.getCurrentGameState();
+        store.dispatch(updateGameBoard(currentGameBoard));
     }
 
     function checkForGameOver(){
@@ -58,6 +65,7 @@ function makeGameController ({player1, player2}) {
 
         playMove(move){
             moveResult = currentPlayer.playMove(move)
+            updateGameBoardState()
             playAiMove()
             checkForGameOver()
         }
