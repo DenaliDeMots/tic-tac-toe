@@ -2,6 +2,7 @@ import React from 'react';
 import Cell from './Cell';
 
 
+
 //the area names represent the indices in a 2d array
 //the first number is the Y coordinate, the second is the X
 
@@ -18,7 +19,7 @@ const style = {
     backgroundColor: 'black'
 }
 
-const GameBoard = ({gridArea, cells, board}) => (
+const GameBoard = ({gridArea, cells, board, playMove}) => (
     <div style={{...style, gridArea}}>
         {drawCells(board)}
     </div>
@@ -26,10 +27,13 @@ const GameBoard = ({gridArea, cells, board}) => (
 
 const drawCells = (board) => {
     const cells = []
-    for(let i = 0; i < board.length; i++){
-        for(let j = 0; j < board[0].length; j++){
-            let key = "C" + i + j;
-            cells.push(<Cell gridArea={key} key={key} mark={board[i][j]}/>)
+    for(let y = 0; y < board.length; y++){
+        for(let x = 0; x < board[0].length; x++){
+            let key = "C" + y + x;
+            let onClick = () => {
+                playMove({x,y})
+            }
+            cells.push(<Cell gridArea={key} key={key} mark={board[y][x]}/>)
         }
     }
     return cells

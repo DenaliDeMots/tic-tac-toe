@@ -6,8 +6,8 @@ const style = {
     backgroundColor: 'white'
 }
 
-const Cell = ({gridArea, mark}) => (
-    <div style={{...style, gridArea}}>
+const Cell = ({gridArea, mark, onClick}) => (
+    <div style={{...style, gridArea}} onClick={onClick}>
         {mark === "X" ? <RedX /> :
             mark === "O" ? <GreenO /> : ""}
     </div>
