@@ -4,7 +4,8 @@ import {
     updateGameBoard,
     setPlayer,
     startGame,
-    gameOver
+    gameOver,
+    setWinner
 } from '../Actions/actions'
 import initialState from './initialState';
 
@@ -44,4 +45,10 @@ test('sessionState toggles between startMenu, gameInProgress, and gameOver', () 
     expect(nextState.sessionState).toBe('startMenu');
     nextState = reducer(nextState, gameOver);
     expect(nextState.sessionState).toBe('gameOver');
+})
+
+test('set winner sets the winner', () => {
+    expect(INITIAL_STATE.winner).toBe(false);
+    let nextState = reducer(INITIAL_STATE, setWinner('player 1'))
+    expect(nextState.winner).toBe('player 1')
 })

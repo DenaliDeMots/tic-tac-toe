@@ -17,3 +17,8 @@ export const startGame = {
 export const gameOver = {
     type: 'GAME_OVER'
 }
+
+export const setWinner = (winner) => ({
+    type: 'SET_WINNER',
+    winner
+})

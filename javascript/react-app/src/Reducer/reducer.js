@@ -29,6 +29,12 @@ function freezer (previousState = INITIAL_STATE, action) {
                 ...previousState,
                 sessionState: 'gameOver'
             }
+
+        case 'SET_WINNER':
+            return {
+                ...previousState,
+                winner: action.winner
+            }
         default:
             return previousState;
     }

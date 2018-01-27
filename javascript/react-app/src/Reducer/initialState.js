@@ -9,7 +9,8 @@ const gameBoard = [
 const INITIAL_STATE = deepFreeze({
     gameBoard,
     player: 'player 1', // 'player 1' || 'player 2'
-    sessionState: 'startMenu' // 'startMenu' || 'gameInProgress' || 'gameOver'
+    sessionState: 'startMenu', // 'startMenu' || 'gameInProgress' || 'gameOver'
+    winner: false // false || 'player 1' || 'player 2'
 })
 
 export default INITIAL_STATE;
