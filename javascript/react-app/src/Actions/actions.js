@@ -5,9 +5,10 @@ export const updateGameBoardAction = (gameBoard) => ({
     gameBoard
 })
 
-export const changePlayer = {
-    type: 'CHANGE_PLAYER'
-}
+export const setPlayer = (player) => ({
+    type: 'SET_PLAYER',
+    player
+})
 
 export const startGame = {
     type: 'START_GAME'

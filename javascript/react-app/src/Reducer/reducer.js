@@ -12,11 +12,10 @@ function freezer (previousState = INITIAL_STATE, action) {
                 gameBoard: action.gameBoard
             }
         
-        case 'CHANGE_PLAYER':
+        case 'SET_PLAYER':
             return {
                 ...previousState,
-                player: previousState.player === 'player 1' ?
-                    'player 2' : 'player 1'
+                player: action.player
             }
         
         case 'START_GAME':

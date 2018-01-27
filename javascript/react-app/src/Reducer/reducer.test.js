@@ -2,7 +2,7 @@ import reducer from './reducer';
 import INITIAL_STATE from './initialState';
 import {
     updateGameBoardAction,
-    changePlayer,
+    setPlayer,
     startGame,
     gameOver
 } from '../Actions/actions'
@@ -20,9 +20,12 @@ test('the update game board action updates the gameboard field in the state', ()
 
 test('the change player action toggles between player 1 and 2', () => {
     let currentPlayer = INITIAL_STATE.player;
-    let nextState = reducer(undefined, changePlayer);
+    expect(currentPlayer).toBe('player 1')
+    let setPlayerAction = setPlayer('player 2')
+    expect(setPlayerAction).toEqual({type: 'SET_PLAYER', player: 'player 2'})
+    let nextState = reducer(undefined, setPlayer('player 2'));
     expect(nextState.player).toBe('player 2');
-    nextState = reducer(nextState, changePlayer);
+    nextState = reducer(nextState, setPlayer('player 1'));
     expect(nextState.player).toBe('player 1');
     expect(nextState).toEqual(INITIAL_STATE)
 })
