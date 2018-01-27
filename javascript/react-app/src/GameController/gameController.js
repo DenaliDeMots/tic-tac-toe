@@ -60,6 +60,8 @@ function makeGameController ({player1, player2}) {
     return publicMethods;
 }
 
-const gameController = makeGameController(ticTacToe.startTicTacToeGame('X', 'Y'));
+function newGame(){
+    return makeGameController(ticTacToe.startTicTacToeGame('X', 'Y'));
+}
 
-export default gameController;
+export default newGame;
