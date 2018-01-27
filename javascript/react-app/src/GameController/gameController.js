@@ -8,7 +8,6 @@ import {
     setWinner
 } from '../Actions/actions';
 import store from './store';
-import INITIAL_STATE from '../Reducer/initialState';
 
 function makeGameController ({player1, player2}) {
     let gameType;
