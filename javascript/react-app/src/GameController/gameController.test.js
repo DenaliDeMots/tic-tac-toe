@@ -26,4 +26,24 @@ test('start 2 player game begins the game', () =>{
     game.playMove({x: 0, y: 0})
     newState = store.getState()
     expect(newState.player).toBe('player 2')
+    game.playMove({x: 1, y: 0})
+    newState = store.getState()
+    expect(newState.player).toBe('player 1');
+})
+
+test('game ends on win', () => {
+    const game = newGame();
+    game.start2PlayerGame()
+    game.playMove({x: 0, y: 0})
+    game.playMove({x: 0, y: 1})
+    game.playMove({x: 1, y: 0})
+    game.playMove({x: 1, y: 1})
+    game.playMove({x: 2, y: 0})
+    let state = store.getState()
+    expect(state.gameBoard).toEqual([
+        ['X','X','X'],
+        ['Y','Y',undefined],
+        [undefined, undefined, undefined]
+    ])
+    expect(state.sessionState).toBe('gameOver')
 })

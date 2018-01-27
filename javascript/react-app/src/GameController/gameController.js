@@ -17,7 +17,7 @@ function makeGameController ({player1, player2}) {
     player1.turnNotifier(onChangeTurn);
 
     function onChangeTurn(player) {
-        currentPlayer = player.player;
+        currentPlayer = player.player === 'X' ? player1 : player2;
         store.dispatch(setPlayer(player.currentTurn))
     }
 
