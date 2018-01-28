@@ -1,5 +1,5 @@
 import newGame from './gameController';
-import store from './store';
+import store from '../store/store';
 
 
 

@@ -1,5 +1,5 @@
-import ticTacToe from '../../../ticTacToe';
-import ai from '../../../ai/ticTacToe_HardAi';
+import ticTacToe from '../../ticTacToe';
+import ai from '../../ai/ticTacToe_HardAi';
 import {
     startGame,
     gameOver,
