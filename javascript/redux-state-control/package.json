@@ -9,6 +9,7 @@
   },
   "dependencies": {
     "deep-freeze": "^0.0.1",
-    "redux": "^3.7.2"
+    "redux": "^3.7.2",
+    "tic-tac-toe": "../tic-tac-toe"
   }
 }
