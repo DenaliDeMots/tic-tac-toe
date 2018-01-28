@@ -7,9 +7,8 @@ import {
     updateGameBoard,
     setWinner
 } from '../Actions/actions';
-import store from './store';
 
-function makeGameController ({player1, player2}) {
+function makeGameController ({player1, player2}, store) {
     let gameType;
     let currentPlayer = player1;
     let moveResult;
@@ -102,8 +101,8 @@ function makeGameController ({player1, player2}) {
     return publicMethods;
 }
 
-function newGame(){
-    return makeGameController(ticTacToe.startTicTacToeGame('X', 'Y'));
+function newGame(store){
+    return makeGameController(ticTacToe.startTicTacToeGame('X', 'Y'), store);
 }
 
 export default newGame;

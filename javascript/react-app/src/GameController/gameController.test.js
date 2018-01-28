@@ -4,14 +4,14 @@ import store from './store';
 
 
 test('single player game defaults to the human as player 1', () => {
-    const game = newGame()
+    const game = newGame(store)
     game.startSinglePlayerGame();
     let newState = store.getState();
     expect(newState.player).toBe('player 1');  
 })
 
 test('setting the human player to player 2 causes the ai to play the first move', () => {
-    const game = newGame()
+    const game = newGame(store)
     game.startSinglePlayerGame('player 2');
     let newState = store.getState();
     expect(newState.player).toBe('player 2');
@@ -19,7 +19,7 @@ test('setting the human player to player 2 causes the ai to play the first move'
 
 
 test('start 2 player game begins the game', () =>{
-    const game = newGame()
+    const game = newGame(store)
     game.start2PlayerGame();
     let newState = store.getState();
     expect(newState.player).toBe('player 1');
@@ -33,7 +33,7 @@ test('start 2 player game begins the game', () =>{
 
 test('game ends on win', () => {
     //horizontal match win
-    let game = newGame();
+    let game = newGame(store);
     game.start2PlayerGame()
     game.playMove({x: 0, y: 0})
     game.playMove({x: 0, y: 1})
@@ -49,7 +49,7 @@ test('game ends on win', () => {
     expect(state.sessionState).toBe('gameOver')
     expect(state.winner).toBe('player 1')
     //vertical match win
-    game = newGame();
+    game = newGame(store);
     game.start2PlayerGame()
     game.playMove({x: 0, y: 0})
     game.playMove({x: 1, y: 0})
@@ -65,7 +65,7 @@ test('game ends on win', () => {
     expect(state.sessionState).toBe('gameOver')
     expect(state.winner).toBe('player 1')
     //diagonal match winner - top left
-    game = newGame();
+    game = newGame(store);
     game.start2PlayerGame()
     game.playMove({x: 1, y: 0})
     game.playMove({x: 0, y: 0})
@@ -82,7 +82,7 @@ test('game ends on win', () => {
     expect(state.sessionState).toBe('gameOver')
     expect(state.winner).toBe('player 2')
     //diagonal match winner - bottom left
-    game = newGame();
+    game = newGame(store);
     game.start2PlayerGame()
     game.playMove({x: 1, y: 0})
     game.playMove({x: 0, y: 2})
@@ -101,7 +101,7 @@ test('game ends on win', () => {
 })
 
 test('game ends on stalemate', () => {
-    const game = newGame();
+    const game = newGame(store);
     game.start2PlayerGame()
     game.playMove({x: 0, y: 0}) // 'X'
     game.playMove({x: 1, y: 1}) // 'Y'
