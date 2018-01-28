@@ -22,3 +22,7 @@ export const setWinner = (winner) => ({
     type: 'SET_WINNER',
     winner
 })
+
+export const reset = {
+    type: 'RESET'
+}
