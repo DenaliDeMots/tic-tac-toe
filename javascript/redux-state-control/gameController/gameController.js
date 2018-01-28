@@ -1,5 +1,5 @@
-//import ticTacToe from '../../ticTacToe';
-//import ai from '../../ai/ticTacToe_HardAi';
+const ticTacToe = require('tic-tac-toe/ticTacToe');
+const ai = require('tic-tac-toe/ai/ticTacToe_HardAi');
 let {
     startGame,
     gameOver,
