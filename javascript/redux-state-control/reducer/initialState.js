@@ -1,4 +1,4 @@
-import deepFreeze from 'deep-freeze'
+const deepFreeze = require('deep-freeze');
 
 const gameBoard = [
     [undefined, undefined, undefined],
@@ -13,4 +13,4 @@ const INITIAL_STATE = deepFreeze({
     winner: false // false || 'player 1' || 'player 2'
 })
 
-export default INITIAL_STATE;
+module.exports = INITIAL_STATE;

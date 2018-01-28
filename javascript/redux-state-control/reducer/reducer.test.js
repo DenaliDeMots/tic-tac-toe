@@ -1,14 +1,13 @@
-import reducer from './reducer';
-import INITIAL_STATE from './initialState';
-import {
+const reducer = require('./reducer');
+const INITIAL_STATE = require('./initialState');
+const {
     updateGameBoard,
     setPlayer,
     startGame,
     gameOver,
     setWinner,
     reset
-} from '../Actions/actions'
-import initialState from './initialState';
+} = require('../actions/actions');
 
 test('the update game board action updates the gameboard field in the state', () => {
     const newGameBoard = [

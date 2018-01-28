@@ -1,7 +1,5 @@
-import INITIAL_STATE from './initialState';
-import initialState from './initialState';
-import { gameOver } from '../Actions/actions';
-import deepFreeze from 'deep-freeze';
+const INITIAL_STATE = require('./initialState');
+const deepFreeze = require('deep-freeze');
 
 function freezer (previousState = INITIAL_STATE, action) {
     switch (action.type) {
@@ -56,4 +54,4 @@ function reducer(previousState, action){
     return deepFreeze(nextState);
 }
 
-export default reducer;
+module.exports = reducer;

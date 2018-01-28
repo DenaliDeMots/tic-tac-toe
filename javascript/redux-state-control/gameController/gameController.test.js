@@ -1,5 +1,5 @@
-import newGame from './gameController';
-import store from '../store/store';
+const newGame = require('./gameController');
+const store = require('../store/store');
 
 let createNewGame = newGame;
 
@@ -128,4 +128,4 @@ function replaceGameController (newGameController) {
     createNewGame = newGameController;
 }
 
-export default replaceGameController;
+module.exports = replaceGameController;

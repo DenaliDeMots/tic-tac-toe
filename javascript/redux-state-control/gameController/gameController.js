@@ -1,12 +1,12 @@
-import ticTacToe from '../../ticTacToe';
-import ai from '../../ai/ticTacToe_HardAi';
-import {
+//import ticTacToe from '../../ticTacToe';
+//import ai from '../../ai/ticTacToe_HardAi';
+let {
     startGame,
     gameOver,
     setPlayer,
     updateGameBoard,
     setWinner
-} from '../Actions/actions';
+} = require('../actions/actions');
 
 function makeGameController ({player1, player2}, store) {
     let gameType;
@@ -105,4 +105,4 @@ function newGame(store){
     return makeGameController(ticTacToe.startTicTacToeGame('X', 'Y'), store);
 }
 
-export default newGame;
+module.exports = newGame;

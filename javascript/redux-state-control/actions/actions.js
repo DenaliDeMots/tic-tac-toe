@@ -1,28 +1,37 @@
 
 
-export const updateGameBoard = (gameBoard) => ({
+const updateGameBoard = (gameBoard) => ({
     type: 'UPDATE_GAMEBOARD',
     gameBoard
 })
 
-export const setPlayer = (player) => ({
+const setPlayer = (player) => ({
     type: 'SET_PLAYER',
     player
 })
 
-export const startGame = {
+const startGame = {
     type: 'START_GAME'
 }
 
-export const gameOver = {
+const gameOver = {
     type: 'GAME_OVER'
 }
 
-export const setWinner = (winner) => ({
+const setWinner = (winner) => ({
     type: 'SET_WINNER',
     winner
 })
 
-export const reset = {
+const reset = {
     type: 'RESET'
+}
+
+module.exports = {
+    updateGameBoard,
+    setPlayer,
+    startGame,
+    gameOver,
+    setWinner,
+    reset
 }
