@@ -1,5 +1,6 @@
 import React from 'react';
 import Cell from './Cell';
+import actionManager from '../actionManager/actionManager';
 
 
 
@@ -19,7 +20,7 @@ const style = {
     backgroundColor: 'black'
 }
 
-const GameBoard = ({gridArea, cells, board, playMove}) => (
+const GameBoard = ({gridArea, cells, board}) => (
     <div style={{...style, gridArea}}>
         {drawCells(board)}
     </div>
@@ -31,7 +32,7 @@ const drawCells = (board) => {
         for(let x = 0; x < board[0].length; x++){
             let key = "C" + y + x;
             let onClick = () => {
-                playMove({x,y})
+                actionManager.playMove({x,y})
             }
             cells.push(<Cell gridArea={key} key={key} mark={board[y][x]}/>)
         }
