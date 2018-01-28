@@ -40,6 +40,13 @@ test('sessionState toggles between startMenu, gameInProgress, and gameOver', () 
     expect(nextState.sessionState).toBe('gameOver');
     nextState = reducer(nextState, reset);
     expect(nextState.sessionState).toEqual('startMenu')
+    //only allow session state to be transitioned with the appropriate actions
+    nextState = reducer(nextState, gameOver);
+    expect(nextState.sessionState).toBe('startMenu');
+    nextState = reducer(nextState, startGame);
+    expect(nextState.sessionState).toBe('gameInProgress');
+    nextState = reducer(nextState, startGame);
+    expect(nextState.sessionState).toBe('gameInProgress');
 })
 
 test('set winner sets the winner', () => {

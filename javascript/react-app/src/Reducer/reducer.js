@@ -18,16 +18,24 @@ function freezer (previousState = INITIAL_STATE, action) {
             }
         
         case 'START_GAME':
-            return {
-                ...previousState,
-                sessionState: 'gameInProgress'
-            }
+            return (
+                previousState.sessionState === 'startMenu' ?
+                    {
+                    ...previousState,
+                    sessionState: 'gameInProgress'
+                    }
+                    : previousState
+            )
 
         case 'GAME_OVER':
-            return {
-                ...previousState,
-                sessionState: 'gameOver'
-            }
+            return (
+                previousState.sessionState === 'gameInProgress' ? 
+                    {
+                    ...previousState,
+                    sessionState: 'gameOver'
+                    }
+                    : previousState
+            )
 
         case 'SET_WINNER':
             return {
