@@ -1,4 +1,6 @@
 {
+  "name": "redux-state-control",
+  "version": "0.1.0",
   "devDependencies": {
     "jest": "^22.1.1"
   },
