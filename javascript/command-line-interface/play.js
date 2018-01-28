@@ -1,7 +1,7 @@
 let inquirer = require('inquirer');
 let chalk = require('chalk');
-let game = require('../ticTacToe');
-let ai = require('../ai/ticTacToe_HardAi')
+let game = require('tic-tac-toe/ticTacToe');
+let ai = require('tic-tac-toe/ai/ticTacToe_HardAi')
 
 let typeOfPlayers;
 let humanGoesFirst;

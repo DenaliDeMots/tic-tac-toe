@@ -1,5 +1,5 @@
-import store from '../../../reactStateControl/store/store';
-import newGame from '../../../reactStateControl/gameController/gameController';
+import store from 'redux-state-control/store/store';
+import newGame from 'redux-state-control/gameController/gameController';
 
 function createActionManager () {
     let storeFacade = {

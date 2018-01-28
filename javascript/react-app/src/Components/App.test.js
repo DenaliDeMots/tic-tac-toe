@@ -2,7 +2,7 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import { Provider } from 'react-redux';
 import { createStore } from 'redux';
-import reducer from '../../../reactStateControl/reducer/reducer';
+import reducer from 'redux-state-control/reducer/reducer';
 import App from './App';
 
 
