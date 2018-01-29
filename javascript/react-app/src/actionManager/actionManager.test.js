@@ -1,9 +1,8 @@
 import actionManager from './actionManager';
 import replaceGameController from 'redux-state-control/gameController/gameController.test';
-import {reset} from 'redux-state-control/actions/actions'
 
 function newGame () {
-    actionManager.reset(reset);
+    actionManager.reset();
     return actionManager;
 }
 

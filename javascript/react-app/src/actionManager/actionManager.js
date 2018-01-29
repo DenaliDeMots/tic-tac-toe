@@ -26,9 +26,8 @@ function createActionManager () {
             return game.playMove(...move)
         },
 
-        reset(resetAction){
-            store.dispatch(resetAction);
-            game = newGame(store)
+        reset(){
+            game = newGame(storeFacade)
         }
     }
     return publicMethods;
