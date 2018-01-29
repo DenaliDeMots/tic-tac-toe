@@ -1,10 +1,16 @@
 const newGame = require('./gameController');
-const store = require('../store/store');
+const reducer = require('../reducer/reducer');
+const {createStore} = require('redux');
+
+function newStore() {
+    return createStore(reducer)
+}
 
 let createNewGame = newGame;
 
 
 test('single player game defaults to the human as player 1', () => {
+    const store = newStore()
     const game = createNewGame(store)
     game.startSinglePlayerGame();
     let newState = store.getState();
@@ -12,6 +18,7 @@ test('single player game defaults to the human as player 1', () => {
 })
 
 test('setting the human player to player 2 causes the ai to play the first move', () => {
+    const store = newStore()
     const game = createNewGame(store)
     game.startSinglePlayerGame('player 2');
     let newState = store.getState();
@@ -20,6 +27,7 @@ test('setting the human player to player 2 causes the ai to play the first move'
 
 
 test('start 2 player game begins the game', () =>{
+    const store = newStore()
     const game = createNewGame(store)
     game.start2PlayerGame();
     let newState = store.getState();
@@ -33,6 +41,7 @@ test('start 2 player game begins the game', () =>{
 })
 
 test('game ends on win', () => {
+    let store = newStore()
     //horizontal match win
     let game = createNewGame(store);
     game.start2PlayerGame()
@@ -50,6 +59,7 @@ test('game ends on win', () => {
     expect(state.sessionState).toBe('gameOver')
     expect(state.winner).toBe('player 1')
     //vertical match win
+    store = newStore()
     game = createNewGame(store);
     game.start2PlayerGame()
     game.playMove({x: 0, y: 0})
@@ -66,6 +76,7 @@ test('game ends on win', () => {
     expect(state.sessionState).toBe('gameOver')
     expect(state.winner).toBe('player 1')
     //diagonal match winner - top left
+    store = newStore()
     game = createNewGame(store);
     game.start2PlayerGame()
     game.playMove({x: 1, y: 0})
@@ -83,6 +94,7 @@ test('game ends on win', () => {
     expect(state.sessionState).toBe('gameOver')
     expect(state.winner).toBe('player 2')
     //diagonal match winner - bottom left
+    store = newStore()
     game = createNewGame(store);
     game.start2PlayerGame()
     game.playMove({x: 1, y: 0})
@@ -102,6 +114,7 @@ test('game ends on win', () => {
 })
 
 test('game ends on stalemate', () => {
+    const store = newStore()
     const game = createNewGame(store);
     game.start2PlayerGame()
     game.playMove({x: 0, y: 0}) // 'X'
