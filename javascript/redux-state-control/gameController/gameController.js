@@ -5,7 +5,8 @@ let {
     gameOver,
     setPlayer,
     updateGameBoard,
-    setWinner
+    setWinner,
+    reset
 } = require('../actions/actions');
 
 function makeGameController ({player1, player2}, store) {
@@ -103,6 +104,7 @@ function makeGameController ({player1, player2}, store) {
 }
 
 function newGame(store){
+    store.dispatch(reset)
     return makeGameController(ticTacToe.startTicTacToeGame('X', 'O'), store);
 }
 
