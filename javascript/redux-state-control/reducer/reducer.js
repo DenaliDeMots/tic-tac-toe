@@ -4,42 +4,27 @@ const deepFreeze = require('deep-freeze');
 function freezer (previousState = INITIAL_STATE, action) {
     switch (action.type) {
         case 'UPDATE_GAMEBOARD':
-            return {
-                ...previousState,
-                gameBoard: action.gameBoard
-            }
+            return Object.assign({}, previousState, {gameBoard: action.gameBoard})
         
         case 'SET_PLAYER':
-            return {
-                ...previousState,
-                player: action.player
-            }
+            return Object.assign({}, previousState, {player: action.player})
         
         case 'START_GAME':
             return (
                 previousState.sessionState === 'startMenu' ?
-                    {
-                    ...previousState,
-                    sessionState: 'gameInProgress'
-                    }
+                    Object.assign({}, previousState, {sessionState: 'gameInProgress'})
                     : previousState
             )
 
         case 'GAME_OVER':
             return (
                 previousState.sessionState === 'gameInProgress' ? 
-                    {
-                    ...previousState,
-                    sessionState: 'gameOver'
-                    }
+                    Object.assign({}, previousState, {sessionState: 'gameOver'})
                     : previousState
             )
 
         case 'SET_WINNER':
-            return {
-                ...previousState,
-                winner: action.winner
-            }
+            return Object.assign({}, previousState, {winner: action.winner})
         
         case 'RESET':
             return INITIAL_STATE;
