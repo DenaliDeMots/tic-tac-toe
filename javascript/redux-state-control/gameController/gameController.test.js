@@ -137,6 +137,39 @@ test('game ends on stalemate', () => {
     expect(state.winner).toBe(false)
 })
 
+test('ai plays moves in single player game', () => {
+    let store = newStore()
+    let game = createNewGame(store);
+    game.startSinglePlayerGame('player 1')
+    game.playMove({x: 0, y: 0})
+    let state = store.getState()
+    expect(state.gameBoard).toEqual([
+        ['X',undefined,undefined],
+        [undefined,'O',undefined],
+        [undefined,undefined,undefined]
+    ])
+    expect(state.player).toBe('player 1')
+    //human player set to player 2
+    store = newStore()
+    game = createNewGame(store);
+    game.startSinglePlayerGame('player 2')
+    state = store.getState()
+    expect(state.player).toBe('player 2')
+    expect(state.gameBoard).toEqual([
+        ['X',undefined,undefined],
+        [undefined,undefined,undefined],
+        [undefined,undefined,undefined]
+    ])
+    game.playMove({x: 1, y: 1})
+    state = store.getState()
+    expect(state.gameBoard).toEqual([
+        ['X',undefined,undefined],
+        [undefined,'O',undefined],
+        [undefined,undefined,'X']
+    ])
+    expect(state.player).toBe('player 2')
+})
+
 function replaceGameController (newGameController) {
     createNewGame = newGameController;
 }

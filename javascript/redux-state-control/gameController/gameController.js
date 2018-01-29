@@ -75,6 +75,7 @@ function makeGameController ({player1, player2}, store) {
         let board = player1.getCurrentGameState()
         let computerMove = ai.chooseMove(board, aiToken, humanToken)
         moveResult = computerPlayer.playMove(computerMove);
+        updateGameBoardState()
         checkForGameOver()
     }
 
