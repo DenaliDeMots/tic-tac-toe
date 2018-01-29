@@ -6,27 +6,34 @@ const containerStyle = {
         ". . ."
         ". singlePlayerStartButton ."
         ". . ."
-        ". 2PlayerStartButton ."
+        ". twoPlayerStartButton ."
         ". . ."`,
-    gridTemplateColumns: '1fr 60vmin 1fr',
+    gridTemplateColumns: '1fr 65vmin 1fr',
     gridTemplateRows: '1fr 20vmin 1fr 20vmin 1fr',
+    position: 'absolute',
     width: '100%',
     height: '100%',
-    backgroundColor: 'blue'
+    backgroundColor: 'rgba(0, 0, 255, 0.9)'
 }
 
 const buttonStyle = {
-    fontSize: '20vmin',
-    fontColor: 'magenta'
+    display: 'flex',
+    justifyContent: 'center',
+    alignItems: 'center',
+    backgroundColor: 'Ivory',
+    border: '1vmin solid #354A2E',
+    borderRadius: '5vmin',
+    fontSize: '5vmin',
+    color: '#354A2E'
 }
 
 const StartMenu = () => (
     <div style={containerStyle}>
         <div style={{...buttonStyle, gridArea: 'singlePlayerStartButton'}}>
-            'Start Single Player Game'
+            Start Single Player Game
         </div>
-        <div style={{...buttonStyle, gridArea: '2PlayerStartButton'}}>
-            'Start Two Player Game'
+        <div style={{...buttonStyle, gridArea: 'twoPlayerStartButton'}}>
+            Start Two Player Game
         </div>
     </div>
 )
