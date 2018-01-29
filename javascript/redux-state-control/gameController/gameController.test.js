@@ -44,7 +44,7 @@ test('game ends on win', () => {
     let state = store.getState()
     expect(state.gameBoard).toEqual([
         ['X','X','X'],
-        ['Y','Y',undefined],
+        ['O','O',undefined],
         [undefined, undefined, undefined]
     ])
     expect(state.sessionState).toBe('gameOver')
@@ -59,8 +59,8 @@ test('game ends on win', () => {
     game.playMove({x: 0, y: 2})
     state = store.getState()
     expect(state.gameBoard).toEqual([
-        ['X','Y',undefined],
-        ['X','Y',undefined],
+        ['X','O',undefined],
+        ['X','O',undefined],
         ['X', undefined, undefined]
     ])
     expect(state.sessionState).toBe('gameOver')
@@ -76,9 +76,9 @@ test('game ends on win', () => {
     game.playMove({x: 2, y: 2})
     state = store.getState()
     expect(state.gameBoard).toEqual([
-        ['Y','X','X'],
-        ['X','Y',undefined],
-        [undefined, undefined, 'Y']
+        ['O','X','X'],
+        ['X','O',undefined],
+        [undefined, undefined, 'O']
     ])
     expect(state.sessionState).toBe('gameOver')
     expect(state.winner).toBe('player 2')
@@ -93,9 +93,9 @@ test('game ends on win', () => {
     game.playMove({x: 2, y: 0})
     state = store.getState()
     expect(state.gameBoard).toEqual([
-        ['X','X','Y'],
-        ['X','Y',undefined],
-        ['Y', undefined, undefined]
+        ['X','X','O'],
+        ['X','O',undefined],
+        ['O', undefined, undefined]
     ])
     expect(state.sessionState).toBe('gameOver')
     expect(state.winner).toBe('player 2')
@@ -105,20 +105,20 @@ test('game ends on stalemate', () => {
     const game = createNewGame(store);
     game.start2PlayerGame()
     game.playMove({x: 0, y: 0}) // 'X'
-    game.playMove({x: 1, y: 1}) // 'Y'
+    game.playMove({x: 1, y: 1}) // 'O'
     game.playMove({x: 1, y: 0}) // 'X'
-    game.playMove({x: 2, y: 0}) // 'Y'
+    game.playMove({x: 2, y: 0}) // 'O'
     game.playMove({x: 0, y: 2}) // 'X'
-    game.playMove({x: 0, y: 1}) // 'Y'
+    game.playMove({x: 0, y: 1}) // 'O'
     game.playMove({x: 2, y: 1}) // 'X'
-    game.playMove({x: 2, y: 2}) // 'Y'
+    game.playMove({x: 2, y: 2}) // 'O'
     game.playMove({x: 1, y: 2}) // 'X'
 
     let state = store.getState()
     expect(state.gameBoard).toEqual([
-        ['X','X','Y'],
-        ['Y','Y','X'],
-        ['X','X','Y']
+        ['X','X','O'],
+        ['O','O','X'],
+        ['X','X','O']
     ])
     expect(state.sessionState).toBe('gameOver')
     expect(state.winner).toBe(false)

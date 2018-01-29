@@ -71,7 +71,7 @@ function makeGameController ({player1, player2}, store) {
     function playAiMove() {
         if(!computerPlayer) return
         let {aiToken, humanToken} = computerPlayer === player1 ?
-            {aiToken: 'X', humanToken: 'Y'} : {aiToken: 'Y', humanToken: 'X'}
+            {aiToken: 'X', humanToken: 'O'} : {aiToken: 'O', humanToken: 'X'}
         let board = player1.getCurrentGameState()
         let computerMove = ai.chooseMove(board, aiToken, humanToken)
         moveResult = computerPlayer.playMove(computerMove);
@@ -102,7 +102,7 @@ function makeGameController ({player1, player2}, store) {
 }
 
 function newGame(store){
-    return makeGameController(ticTacToe.startTicTacToeGame('X', 'Y'), store);
+    return makeGameController(ticTacToe.startTicTacToeGame('X', 'O'), store);
 }
 
 module.exports = newGame;
