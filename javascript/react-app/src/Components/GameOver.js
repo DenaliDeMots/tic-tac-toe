@@ -23,7 +23,8 @@ const buttonStyle = {
     border: '1vmin solid #354A2E',
     borderRadius: '5vmin',
     fontSize: '5vmin',
-    color: '#354A2E'
+    color: '#354A2E',
+    textAlign: 'center'
 }
 
 const hiddenContainerStyle = {
@@ -32,12 +33,14 @@ const hiddenContainerStyle = {
     transition: 'transform 0.5s ease'
 }
 
-const GameOver = ({sessionState}) => (
+const GameOver = ({sessionState, winner}) => (
     <div style={sessionState === 'gameOver' ? containerStyle : hiddenContainerStyle}>
         <div
             style={{...buttonStyle, gridArea: 'replay'}}
             onClick={() => {actionManager.reset()}}
         >
+            {winner ? (winner === 'player 1' ? 'X Wins!' : 'O Wins!') : 'Stalemate'}
+            <br/>
             Play Again?
         </div>
     </div>

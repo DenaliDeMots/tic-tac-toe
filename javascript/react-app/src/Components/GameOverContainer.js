@@ -2,8 +2,8 @@ import {connect} from 'react-redux';
 import GameOver from './GameOver';
 
 
-const mapStateToProps = (state) => {
-    return {sessionState: state.sessionState}
+const mapStateToProps = ({sessionState, winner}) => {
+    return {sessionState, winner}
 }
 
 const GameOverContainer = connect(
