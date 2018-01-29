@@ -1,6 +1,6 @@
 import React from 'react';
 import GameBoardContainer from './GameBoardContainer';
-import StartMenu from './StartMenu';
+import StartMenuContainer from './StartMenuContainer';
 
 
 const backgroundStyle = {
@@ -10,7 +10,7 @@ const backgroundStyle = {
 
 const App = () => (
   <div id='background' style={backgroundStyle}>
-    <StartMenu />
+    <StartMenuContainer />
     <GameBoardContainer />
   </div>
 )

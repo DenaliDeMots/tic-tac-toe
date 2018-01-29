@@ -28,8 +28,14 @@ const buttonStyle = {
     color: '#354A2E'
 }
 
-const StartMenu = () => (
-    <div style={containerStyle}>
+const hiddenContainerStyle = {
+    ...containerStyle,
+    transform: 'translateY(-100%)',
+    transition: 'transform 0.5s ease'
+}
+
+const StartMenu = ({sessionState}) => (
+    <div style={sessionState === 'startMenu' ? containerStyle : hiddenContainerStyle}>
         <div
             style={{...buttonStyle, gridArea: 'singlePlayerStartButton'}}
             //TODO create secondary menu for choosing if human goes first
