@@ -48,7 +48,7 @@ const drawCells = (board) => {
             let onClick = () => {
                 actionManager.playMove({x,y})
             }
-            cells.push(<Cell gridArea={key} key={key} mark={board[y][x]}/>)
+            cells.push(<Cell gridArea={key} key={key} mark={board[y][x]} onClick={onClick}/>)
         }
     }
     return cells
