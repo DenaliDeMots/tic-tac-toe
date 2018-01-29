@@ -7,7 +7,19 @@ import actionManager from '../actionManager/actionManager';
 //the area names represent the indices in a 2d array
 //the first number is the Y coordinate, the second is the X
 
-const style = {
+const containerStyle = {
+    display: 'grid',
+    gridTemplateAreas: `
+      ". . ."
+      ". gameBoard ."
+      ". . ."`,
+    gridTemplateColumns: '1fr 90vmin 1fr',
+    gridTemplateRows: '1fr 90vmin 1fr',
+    height: '100%'
+  }
+
+const gameboardStyle = {
+    gridArea: 'gameBoard',
     display: 'grid',
     gridTemplateAreas: `
     "C00 C01 C02"
@@ -20,9 +32,11 @@ const style = {
     backgroundColor: 'black'
 }
 
-const GameBoard = ({gridArea, cells, board}) => (
-    <div style={{...style, gridArea}}>
-        {drawCells(board)}
+const GameBoard = ({cells, board}) => (
+    <div id='gameBoard-container' style={containerStyle}>
+        <div style={gameboardStyle}>
+            {drawCells(board)}
+        </div>
     </div>
 )
 
