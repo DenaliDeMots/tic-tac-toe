@@ -1,4 +1,5 @@
 import React from 'react';
+import actionManager from '../actionManager/actionManager';
 
 const containerStyle = {
     display: 'grid',
@@ -29,10 +30,17 @@ const buttonStyle = {
 
 const StartMenu = () => (
     <div style={containerStyle}>
-        <div style={{...buttonStyle, gridArea: 'singlePlayerStartButton'}}>
+        <div
+            style={{...buttonStyle, gridArea: 'singlePlayerStartButton'}}
+            //TODO create secondary menu for choosing if human goes first
+            onClick={() => {actionManager.startSinglePlayerGame('player 1')}}
+        >
             Start Single Player Game
         </div>
-        <div style={{...buttonStyle, gridArea: 'twoPlayerStartButton'}}>
+        <div
+            style={{...buttonStyle, gridArea: 'twoPlayerStartButton'}}
+            onClick={() => {actionManager.start2PlayerGame()}}
+        >
             Start Two Player Game
         </div>
     </div>
