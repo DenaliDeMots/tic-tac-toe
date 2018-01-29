@@ -14,16 +14,16 @@ function createActionManager () {
     let game = newGame(storeFacade)
 
     let publicMethods = {
-        startSinglePlayerGame(arg){
-            game.startSinglePlayerGame(arg)
+        startSinglePlayerGame(...args){
+            return game.startSinglePlayerGame(...args)
         },
 
-        start2PlayerGame() {
-            game.start2PlayerGame()
+        start2PlayerGame(...args) {
+            return game.start2PlayerGame(...args)
         },
 
-        playMove(move){
-            game.playMove(move)
+        playMove(...move){
+            return game.playMove(...move)
         },
 
         reset(resetAction){
