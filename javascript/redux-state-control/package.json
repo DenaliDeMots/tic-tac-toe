@@ -2,10 +2,13 @@
   "name": "redux-state-control",
   "version": "0.1.0",
   "devDependencies": {
+    "babel-cli": "^6.26.0",
+    "babel-preset-env": "^1.6.1",
     "jest": "^22.1.1"
   },
   "scripts": {
-    "test": "jest"
+    "test": "jest",
+    "build": "babel src -d lib"
   },
   "dependencies": {
     "deep-freeze": "^0.0.1",
