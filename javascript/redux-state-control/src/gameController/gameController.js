@@ -1,5 +1,5 @@
-const ticTacToe = require('tic-tac-toe/ticTacToe');
-const ai = require('tic-tac-toe/ai/ticTacToe_HardAi');
+const ticTacToe = require('tic-tac-toe/lib/ticTacToe');
+const ai = require('tic-tac-toe/lib/ai/ticTacToe_HardAi');
 let {
     startGame,
     gameOver,
